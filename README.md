@@ -108,6 +108,9 @@ governance that this repository does not provide.
 ## Reproducibility
 
 ```bash
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# Unix: source .venv/bin/activate
 pip install -e ".[dev]"
 python -m pytest
 ```

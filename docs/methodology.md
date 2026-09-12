@@ -330,10 +330,8 @@ population samples.
 ## 21. Reproducibility
 
 Python ≥ 3.10. Dependencies: `pandas`, `numpy`, `scikit-learn`,
-`matplotlib` (`pyproject.toml`). `scipy` is imported by the inference,
-robustness, and diagnostics modules; it is typically installed as a
-scikit-learn dependency. TODO: declare `scipy` explicitly in
-`pyproject.toml` if a packaging pass is later authorized.
+`scipy`, `matplotlib` (`pyproject.toml`). `scipy` is required by the
+inference, robustness, and diagnostics modules.
 
 Install and test:
 

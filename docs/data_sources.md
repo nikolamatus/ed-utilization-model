@@ -23,6 +23,14 @@ The pipeline does **not** download from AHRQ. `feasibility/download.py`
 locates a user-supplied `.dta` in `data/raw/` and records file size and
 SHA-256 in `data/raw/provenance.json`.
 
+Obtain the official public-use file from AHRQ (this repository does
+not redistribute it):
+
+1. Open the HC-245 documentation page above.
+2. From the HC-245 download page linked there, download the
+   Stata-format Data File (`.zip`).
+3. Unzip it and place the resulting `.dta` file at `data/raw/h245.dta`.
+
 Do not substitute a two-year longitudinal file and treat it as
 equivalent.
 
