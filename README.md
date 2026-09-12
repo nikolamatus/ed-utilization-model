@@ -73,7 +73,7 @@ unnecessary.
 
 A repeat-level sensitivity analysis (df = 4) left ROC and PR
 significant; it does not replace the pre-registered Nadeau–Bengio test.
-See `docs/results.md`.
+See [`docs/results.md`](docs/results.md).
 
 ## Methods (concise)
 
@@ -96,7 +96,9 @@ See `docs/results.md`.
   fold differences; Family A unadjusted; Family B Holm–Bonferroni
   separately for ROC, PR, and Brier.
 
-Full methods: `docs/methodology.md`. Limitations: `docs/limitations.md`.
+Full methods: [`docs/methodology.md`](docs/methodology.md).
+Limitations: [`docs/limitations.md`](docs/limitations.md).
+Pre-registration: [`docs/pre_registration_block_ablation_plan.md`](docs/pre_registration_block_ablation_plan.md).
 
 ## What this project is not
 
@@ -120,7 +122,7 @@ fold-level CSVs and, if `data/raw/h245.dta` is present, the analytic
 cohort for diagnostics.
 
 Place the official HC-245 Stata file at `data/raw/h245.dta` (see
-`docs/data_sources.md`). The pipeline never fetches the file.
+[`docs/data_sources.md`](docs/data_sources.md)). The pipeline never fetches the file.
 
 **Do not re-run `python -m feasibility.run` against an existing completed
 analysis.** That command writes first-run holdout artifacts
@@ -153,8 +155,9 @@ Entry points that exist in the repository (for the completed sequence):
 HC-245 is an AHRQ **public-use** MEPS file. Users must obtain it from
 AHRQ, follow AHRQ public-use conditions, and must not attempt to
 identify individuals. This repository does not redistribute the
-microdata (`data/raw/` is gitignored). Cite AHRQ/MEPS HC-245 when using
-the data. See `docs/data_sources.md`.
+microdata (`data/raw/` is gitignored). Cite AHRQ and the Medical
+Expenditure Panel Survey when using the data. See
+[`docs/data_sources.md`](docs/data_sources.md).
 
 ## Repository layout
 
@@ -166,12 +169,19 @@ data/raw/       user-supplied h245.dta (gitignored)
 outputs/        saved tables and figures from the completed analysis
 ```
 
-Status ledger: `docs/analysis_status.md`.
+Status ledger: [`docs/analysis_status.md`](docs/analysis_status.md).
+
+## License
+
+Original source code and documentation in this repository are released
+under the MIT License (see [`LICENSE`](LICENSE)). That license does not
+grant rights to AHRQ MEPS microdata. Users must obtain HC-245 from AHRQ
+and follow AHRQ public-use conditions.
 
 ## Related work
 
 A targeted review of prior ED-prediction, MEPS, and incremental-information
-studies is in `docs/related_work.md`. In the literature reviewed, future
+studies is in [`docs/related_work.md`](docs/related_work.md). In the literature reviewed, future
 ED use is already known to be predictable from historical utilization and
 other patient characteristics, and prior ED visits are typically a dominant
 predictor. No directly matching study was identified that compared an
