@@ -179,6 +179,13 @@ under the MIT License (see [`LICENSE`](LICENSE)). That license does not
 grant rights to AHRQ MEPS microdata. Users must obtain HC-245 from AHRQ
 and follow AHRQ public-use conditions.
 
+## Citation
+
+Cite this repository using the metadata in [`CITATION.cff`](CITATION.cff).
+This is a research software citation for the frozen MEPS Panel 24
+analysis. It is not a peer-reviewed journal article and does not have
+a DOI yet.
+
 ## Related work
 
 A targeted review of prior ED-prediction, MEPS, and incremental-information
