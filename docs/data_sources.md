@@ -136,8 +136,11 @@ predictor set.
 HC-245 is distributed by AHRQ as a public-use file. Users must obtain it
 from AHRQ and follow AHRQ public-use conditions. This repository does
 not redistribute the microdata. Do not attempt to identify individuals.
-Cite AHRQ/MEPS HC-245 when reporting analyses that use the file.
 
-TODO: add the exact AHRQ public-use citation/acknowledgement wording
-from the current HC-245 documentation if a manuscript requires a formal
-data-use statement beyond the documentation URL above.
+The HC-245 documentation states: “The Agency for Healthcare Research
+and Quality requests that users cite AHRQ and the Medical Expenditure
+Panel Survey as the data source in any publications or research based
+upon these data.” AHRQ does not specify a required bibliographic format
+beyond that request. The file used here is MEPS HC-245, Panel 24,
+4-Year Longitudinal Public Use File (2019–2022);
+https://meps.ahrq.gov/data_stats/download_data/pufs/h245/h245doc.shtml
