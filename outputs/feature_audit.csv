@@ -1,0 +1,32 @@
+feature,source_variable,family,description,availability_year,time_invariant,time_availability,allowed_by_cutoff,treatment,documentation_status,present_in_file,usable,reason
+AGEY3X,AGEY3X,demographics,Age as of 12/31/2021 (edited/imputed),2021.0,False,2021,True,numeric,confirmed,True,True,Age as of 12/31/2021 (edited/imputed)
+SEX,SEX,demographics,Sex (time-invariant),,True,time-invariant,True,categorical,confirmed,True,True,Sex (time-invariant)
+RACETHX,RACETHX,demographics,Race/ethnicity edited/imputed (time-invariant),,True,time-invariant,True,categorical,confirmed,True,True,Race/ethnicity edited/imputed (time-invariant)
+REGIONY3,REGIONY3,demographics,Census region as of 12/31/2021,2021.0,False,2021,True,categorical,confirmed,True,True,Census region as of 12/31/2021
+MARRY6X,MARRY6X,demographics,"Marital status, Round 6 (2021), edited/imputed",2021.0,False,2021,True,categorical,confirmed,True,True,"Marital status, Round 6 (2021), edited/imputed"
+RTHLTH6,RTHLTH6,health_status,"Perceived health status, Round 6 (2021)",2021.0,False,2021,True,categorical,confirmed,True,True,"Perceived health status, Round 6 (2021)"
+MNHLTH6,MNHLTH6,health_status,"Perceived mental health status, Round 6 (2021)",2021.0,False,2021,True,categorical,confirmed,True,True,"Perceived mental health status, Round 6 (2021)"
+INSCOVY3,INSCOVY3,access,"Health insurance coverage indicator, 2021",2021.0,False,2021,True,categorical,confirmed,True,True,"Health insurance coverage indicator, 2021"
+HAVEUS6,HAVEUS6,access,"Usual source of care provider, Round 6 (2021)",2021.0,False,2021,True,categorical,confirmed,True,True,"Usual source of care provider, Round 6 (2021)"
+POVCATY3,POVCATY3,socioeconomic,"Family income as % of poverty line, 2021",2021.0,False,2021,True,categorical,confirmed,True,True,"Family income as % of poverty line, 2021"
+TTLPY3X,TTLPY3X,socioeconomic,"Person total income, 2021",2021.0,False,2021,True,numeric,confirmed,True,True,"Person total income, 2021"
+EMPST6,EMPST6,socioeconomic,"Employment status, Round 6 (2021)",2021.0,False,2021,True,categorical,confirmed,True,True,"Employment status, Round 6 (2021)"
+ERTOTY1,ERTOTY1,prior_utilization,"Emergency room visits, 2019",2019.0,False,2019,True,numeric,confirmed,True,True,"Emergency room visits, 2019"
+ERTOTY2,ERTOTY2,prior_utilization,"Emergency room visits, 2020",2020.0,False,2020,True,numeric,confirmed,True,True,"Emergency room visits, 2020"
+ERTOTY3,ERTOTY3,prior_utilization,"Emergency room visits, 2021",2021.0,False,2021,True,numeric,confirmed,True,True,"Emergency room visits, 2021"
+ERTOTY4,ERTOTY4,outcome,"Emergency room visits, 2022 — PRIMARY OUTCOME, never a predictor",2022.0,False,2022,False,outcome,confirmed,True,False,OUTCOME year 2022 — must never enter X
+AGEY4X,AGEY4X,demographics,Age as of 12/31/2022 — post-cutoff,2022.0,False,2022,False,numeric,confirmed,True,False,Age as of 12/31/2022 — post-cutoff | post-cutoff (availability_year=2022)
+REGIONY4,REGIONY4,demographics,Census region as of 12/31/2022 — post-cutoff,2022.0,False,2022,False,categorical,confirmed,True,False,Census region as of 12/31/2022 — post-cutoff | post-cutoff (availability_year=2022)
+REGION8,REGION8,demographics,"Census region, Round 8 (2022) — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Census region, Round 8 (2022) — post-cutoff | post-cutoff (availability_year=2022)"
+REGION9,REGION9,demographics,"Census region, Round 9 (2022) — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Census region, Round 9 (2022) — post-cutoff | post-cutoff (availability_year=2022)"
+MARRY8X,MARRY8X,demographics,"Marital status, Round 8 (2022) — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Marital status, Round 8 (2022) — post-cutoff | post-cutoff (availability_year=2022)"
+RTHLTH8,RTHLTH8,health_status,"Perceived health, Round 8 (2022) — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Perceived health, Round 8 (2022) — post-cutoff | post-cutoff (availability_year=2022)"
+RTHLTH9,RTHLTH9,health_status,"Perceived health, Round 9 (2022) — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Perceived health, Round 9 (2022) — post-cutoff | post-cutoff (availability_year=2022)"
+MNHLTH8,MNHLTH8,health_status,"Perceived mental health, Round 8 (2022) — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Perceived mental health, Round 8 (2022) — post-cutoff | post-cutoff (availability_year=2022)"
+MNHLTH9,MNHLTH9,health_status,"Perceived mental health, Round 9 (2022) — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Perceived mental health, Round 9 (2022) — post-cutoff | post-cutoff (availability_year=2022)"
+INSCOVY4,INSCOVY4,access,"Health insurance coverage indicator, 2022 — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Health insurance coverage indicator, 2022 — post-cutoff | post-cutoff (availability_year=2022)"
+HAVEUS8,HAVEUS8,access,"Usual source of care, Round 8 (2022) — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Usual source of care, Round 8 (2022) — post-cutoff | post-cutoff (availability_year=2022)"
+POVCATY4,POVCATY4,socioeconomic,"Poverty category, 2022 — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Poverty category, 2022 — post-cutoff | post-cutoff (availability_year=2022)"
+TTLPY4X,TTLPY4X,socioeconomic,"Person total income, 2022 — post-cutoff",2022.0,False,2022,False,numeric,confirmed,True,False,"Person total income, 2022 — post-cutoff | post-cutoff (availability_year=2022)"
+EMPST8,EMPST8,socioeconomic,"Employment status, Round 8 (2022) — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Employment status, Round 8 (2022) — post-cutoff | post-cutoff (availability_year=2022)"
+EMPST9,EMPST9,socioeconomic,"Employment status, Round 9 (2022) — post-cutoff",2022.0,False,2022,False,categorical,confirmed,True,False,"Employment status, Round 9 (2022) — post-cutoff | post-cutoff (availability_year=2022)"

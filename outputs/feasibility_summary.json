@@ -1,0 +1,172 @@
+{
+  "shape": {
+    "n_rows": 5565,
+    "n_columns": 5321,
+    "n_unique_persons": 5565
+  },
+  "duplicate_check": {
+    "n_rows": 5565,
+    "n_unique_persons": 5565,
+    "n_duplicate_person_rows": 0
+  },
+  "cohort": {
+    "cohort_rule": "YEARIND==1 AND valid non-sentinel ERTOTY1\u2013Y4",
+    "why_not_all9rds": "ALL9RDS==1 is the AHRQ subset for weighted national longitudinal estimates. This experiment is unweighted prediction; YEARIND==1 matches the 2019\u20132022 window without requiring complete 9-round interviews.",
+    "n_raw": 5565,
+    "n_yearind_all_four_years": 5108,
+    "n_valid_ed_all_four_years": 5108,
+    "n_all9rds": 4883,
+    "n_analytic_cohort": 5108,
+    "n_analytic_and_all9rds": 4883,
+    "weights_applied": false,
+    "survey_weight_note": "LONGWT/VARSTR/VARPSU are recorded if present and are not applied. Metrics are unweighted predictive performance on the analytic sample, not nationally representative MEPS estimates."
+  },
+  "usable_n": 5108,
+  "outcome_prevalence": 0.1356695379796398,
+  "n_outcome_events": 693,
+  "secondary_outcome_high_ed_use": {
+    "status": "not_modeled_future_analysis",
+    "definition": "future_high_ed_use = 1 if ERTOTY4 >= 2",
+    "n_with_valid_outcome": 5108,
+    "n_events": 209,
+    "prevalence": 0.04091620986687549,
+    "note": "Constructed for event-count inspection only. Not modeled, not used by the decision gate, and not claimed as part of this experiment. Adequacy of a \u22652-visit analysis is unknown until the real HC-245 file is loaded."
+  },
+  "weighted": false,
+  "metric_scope": "unweighted_predictive_performance_on_analytic_sample",
+  "not_national_estimates": true,
+  "calibration": {
+    "produced": true,
+    "path": "calibration.csv"
+  },
+  "decision_gate": {
+    "status": "GREEN",
+    "components": {
+      "data_feasibility": {
+        "status": "PASS",
+        "reasons": [
+          "Analytic sample and predictor families clear the triage floors."
+        ]
+      },
+      "baseline_signal": {
+        "status": "PASS",
+        "reasons": [
+          "Prior-ED baseline ROC-AUC (0.627) clears the triage floor. This is expected persistence, not research feasibility by itself."
+        ]
+      },
+      "incremental_value": {
+        "status": "PASS",
+        "reasons": [
+          "Full model improves ROC-AUC by 0.065 and PR-AUC by 0.085 over the best ED-history baseline (triage lifts only)."
+        ]
+      },
+      "research_readiness": {
+        "status": "PASS",
+        "reasons": [
+          "Leakage check, unique persons, YEARIND cohort rule, and calibration outputs are in place. Metrics remain unweighted analytic-sample scores."
+        ]
+      }
+    },
+    "reasons": [
+      "Data feasibility, baseline signal, incremental value over ED history, and research-readiness checks all passed the pre-specified triage floors.",
+      "[data_feasibility] Analytic sample and predictor families clear the triage floors.",
+      "[baseline_signal] Prior-ED baseline ROC-AUC (0.627) clears the triage floor. This is expected persistence, not research feasibility by itself.",
+      "[incremental_value] Full model improves ROC-AUC by 0.065 and PR-AUC by 0.085 over the best ED-history baseline (triage lifts only).",
+      "[research_readiness] Leakage check, unique persons, YEARIND cohort rule, and calibration outputs are in place. Metrics remain unweighted analytic-sample scores."
+    ],
+    "note": "This gate is an engineering/research triage tool, not a validated statistical decision rule. Thresholds are conservative and pre-specified for this feasibility pass. GREEN requires evidence that the broader pre-2022 feature set adds value beyond historical ED utilization \u2014 not merely that prior ED use predicts future ED use."
+  },
+  "model_metrics_summary": [
+    {
+      "model_name": "baseline_1_prevalence_only",
+      "n_test": 1277,
+      "prevalence": 0.13547376664056382,
+      "roc_auc": 0.5,
+      "pr_auc": 0.13547376664056382,
+      "brier_score": 0.11712069332863466,
+      "accuracy": 0.8645262333594361,
+      "sensitivity": 0.0,
+      "specificity": 1.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "decision_threshold": 0.5,
+      "threshold_metrics_note": "Threshold-dependent exploratory metrics at decision_threshold=0.5. Not an optimized operating point and not a clinical cutoff.",
+      "confusion": {
+        "tn": 1104,
+        "fp": 0,
+        "fn": 173,
+        "tp": 0
+      }
+    },
+    {
+      "model_name": "baseline_2_prior_year_ed_only",
+      "n_test": 1277,
+      "prevalence": 0.13547376664056382,
+      "roc_auc": 0.6273404121638602,
+      "pr_auc": 0.25142417467748723,
+      "brier_score": 0.10844192566780826,
+      "accuracy": 0.8692247454972593,
+      "sensitivity": 0.057803468208092484,
+      "specificity": 0.9963768115942029,
+      "precision": 0.7142857142857143,
+      "recall": 0.057803468208092484,
+      "decision_threshold": 0.5,
+      "threshold_metrics_note": "Threshold-dependent exploratory metrics at decision_threshold=0.5. Not an optimized operating point and not a clinical cutoff.",
+      "confusion": {
+        "tn": 1100,
+        "fp": 4,
+        "fn": 163,
+        "tp": 10
+      }
+    },
+    {
+      "model_name": "baseline_3_three_year_ed_history",
+      "n_test": 1277,
+      "prevalence": 0.13547376664056382,
+      "roc_auc": 0.709095145346402,
+      "pr_auc": 0.33079411280933274,
+      "brier_score": 0.10528623721670442,
+      "accuracy": 0.8707909162098669,
+      "sensitivity": 0.06936416184971098,
+      "specificity": 0.9963768115942029,
+      "precision": 0.75,
+      "recall": 0.06936416184971098,
+      "decision_threshold": 0.5,
+      "threshold_metrics_note": "Threshold-dependent exploratory metrics at decision_threshold=0.5. Not an optimized operating point and not a clinical cutoff.",
+      "confusion": {
+        "tn": 1100,
+        "fp": 4,
+        "fn": 161,
+        "tp": 12
+      }
+    },
+    {
+      "model_name": "model_4_regularized_logistic_full_features",
+      "n_test": 1277,
+      "prevalence": 0.13547376664056382,
+      "roc_auc": 0.7740062410991038,
+      "pr_auc": 0.41593508223653725,
+      "brier_score": 0.09938997744487747,
+      "accuracy": 0.8739232576350823,
+      "sensitivity": 0.10404624277456648,
+      "specificity": 0.9945652173913043,
+      "precision": 0.75,
+      "recall": 0.10404624277456648,
+      "decision_threshold": 0.5,
+      "threshold_metrics_note": "Threshold-dependent exploratory metrics at decision_threshold=0.5. Not an optimized operating point and not a clinical cutoff.",
+      "confusion": {
+        "tn": 1098,
+        "fp": 6,
+        "fn": 155,
+        "tp": 18
+      }
+    }
+  ],
+  "families_present": [
+    "access",
+    "demographics",
+    "health_status",
+    "prior_utilization",
+    "socioeconomic"
+  ]
+}
