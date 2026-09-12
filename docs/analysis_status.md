@@ -194,10 +194,12 @@ locked analysis.
 
 ---
 
+A research manuscript draft is complete and is in
+`docs/manuscript.md`.
+
 ## Next research stage (not started)
 
-1. Methods / results manuscript.
-2. External / temporal validation using another appropriate public
+1. External / temporal validation using another appropriate public
    dataset or a later MEPS panel.
 
 ## Figures note

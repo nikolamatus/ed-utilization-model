@@ -99,6 +99,7 @@ See [`docs/results.md`](docs/results.md).
 Full methods: [`docs/methodology.md`](docs/methodology.md).
 Limitations: [`docs/limitations.md`](docs/limitations.md).
 Pre-registration: [`docs/pre_registration_block_ablation_plan.md`](docs/pre_registration_block_ablation_plan.md).
+Research manuscript: [`docs/manuscript.md`](docs/manuscript.md).
 
 ## What this project is not
 
