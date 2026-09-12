@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ed-utilization-model"
-version = "0.1.0"
+version = "1.0.0"
 description = "Reproducible longitudinal ED-utilization feasibility pipeline (AHRQ MEPS public data)"
 requires-python = ">=3.10"
 dependencies = [
