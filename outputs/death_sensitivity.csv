@@ -1,0 +1,4 @@
+comparison,n_test,n_decedents_train_dropped,n_decedents_test_dropped,roc_auc,pr_auc,brier_score,delta_roc_vs_original_full,delta_pr_vs_original_full,delta_brier_vs_original_full,note
+original_full_model_original_test,1277,0,0,0.7740062410991038,0.41593508223653725,0.09938997744487747,0.0,0.0,0.0,Primary full model on the original holdout. Cohort unchanged.
+original_full_model_survivor_test,1268,0,9,0.7722135777010838,0.41205438026835717,0.09817486166346258,-0.001792663398019978,-0.003880701968180078,-0.0012151157814148938,"Same fitted original model, evaluated after dropping decedents from the test fold only."
+full_model_refit_excluding_yearind1_decedents,1268,28,9,0.7709052339135631,0.41129559743326294,0.09825458189280926,-0.0031010071855406274,-0.0046394848032743075,-0.001135395552068208,Sensitivity only. Primary YEARIND==1 cohort is not replaced.

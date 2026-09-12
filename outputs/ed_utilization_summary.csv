@@ -1,0 +1,5 @@
+year_label,variable,n_valid,zero_visits,one_visit,two_plus_visits,mean_visits,median_visits
+year1_2019,ERTOTY1,5452,4477,650,325,0.2777,0.0
+year2_2020,ERTOTY2,5332,4570,563,199,0.2054,0.0
+year3_2021,ERTOTY3,5255,4515,538,202,0.208,0.0
+year4_2022,ERTOTY4,5222,4516,492,214,0.1988,0.0

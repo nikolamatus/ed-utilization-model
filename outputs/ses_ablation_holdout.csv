@@ -1,0 +1,7 @@
+model,split,n_train,n_test,roc_auc,pr_auc,brier_score,experiment_id
+ed_history,locked_holdout_not_used_for_selection,3831,1277,0.709095145346402,0.33079411280933274,0.10528623721670442,B5
+full_model,locked_holdout_not_used_for_selection,3831,1277,0.7740062410991038,0.41593508223653725,0.09938997744487747,B5
+full_without_ses,locked_holdout_not_used_for_selection,3831,1277,0.7737365962972271,0.41744536130224297,0.09939759761567915,B5
+delta_full_minus_ed,locked_holdout_not_used_for_selection,3831,1277,0.06491109575270182,0.0851409694272045,-0.0058962597718269505,B5
+delta_noses_minus_ed,locked_holdout_not_used_for_selection,3831,1277,0.06464145095082519,0.08665124849291023,-0.005888639601025272,B5
+delta_noses_minus_full,locked_holdout_not_used_for_selection,3831,1277,-0.000269644801876634,0.001510279065705722,7.6201708016782055e-06,B5
