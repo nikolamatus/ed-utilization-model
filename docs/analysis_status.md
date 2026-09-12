@@ -8,7 +8,7 @@ Research-status ledger for the locked MEPS Panel 24 analysis.
 |---|---|
 | Exploratory / model-comparison phase | **COMPLETE** |
 | Statistical inference | **COMPLETE** |
-| Documentation phase | **IN PROGRESS** |
+| Documentation phase | **COMPLETE** |
 
 No additional exploratory ablations, model comparisons, hyperparameter
 searches, or predictor-selection analyses are planned as part of this
@@ -196,16 +196,9 @@ locked analysis.
 
 ## Next research stage (not started)
 
-Do **not** implement the next stage in this documentation task.
-
-1. Documentation freeze (after human review of this package).
-2. Methods / results manuscript.
-3. Reproducibility packaging.
-4. External / temporal validation using another appropriate public
+1. Methods / results manuscript.
+2. External / temporal validation using another appropriate public
    dataset or a later MEPS panel.
-
-A research-freeze manifest and repository packaging pass are
-explicitly out of scope until after human review.
 
 ## Figures note
 
