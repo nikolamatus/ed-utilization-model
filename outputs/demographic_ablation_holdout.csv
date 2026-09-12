@@ -1,0 +1,7 @@
+model,split,n_train,n_test,roc_auc,pr_auc,brier_score
+ed_history,locked_holdout_not_used_for_selection,3831,1277,0.709095145346402,0.33079411280933274,0.10528623721670442
+full_model,locked_holdout_not_used_for_selection,3831,1277,0.7740062410991038,0.41593508223653725,0.09938997744487747
+full_without_demographics,locked_holdout_not_used_for_selection,3831,1277,0.7705532168886654,0.41005737332966596,0.0998779959123176
+delta_full_minus_ed,locked_holdout_not_used_for_selection,3831,1277,0.06491109575270182,0.0851409694272045,-0.0058962597718269505
+delta_nodemo_minus_ed,locked_holdout_not_used_for_selection,3831,1277,0.06145807154226346,0.07926326052033322,-0.005408241304386829
+delta_nodemo_minus_full,locked_holdout_not_used_for_selection,3831,1277,-0.00345302421043836,-0.005877708906871282,0.0004880184674401211
