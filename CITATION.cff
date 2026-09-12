@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: If you use this repository, please cite it using these metadata.
+type: software
+title: Reproducible Longitudinal ED Utilization Prediction Framework
+version: "1.0.0"
+date-released: "2026-09-12"
+license: MIT
+repository-code: "https://github.com/nickmatus/ed-utilization-model"
+authors:
+  - family-names: Matus
+    given-names: Nikola
