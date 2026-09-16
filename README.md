@@ -44,36 +44,54 @@ non-sentinel `ERTOTY1`–`ERTOTY4`); **693** 2022 ED events
 | Full regularized logistic | 0.774 | 0.416 | 0.099 |
 
 Holdout increment, full minus 3-year ED history: **+0.065 ROC-AUC**,
-**+0.085 PR-AUC**. The holdout was a confirmation split. It was not used
-to choose the model or to compute inferential p-values.
+**+0.085 PR-AUC**, **−0.006 Brier**. Person-level bootstrap percentile
+95% CIs (B = 2,000, seed 20210915): ΔROC **0.028 to 0.101**, ΔPR
+**0.047 to 0.121**, ΔBrier **−0.009 to −0.003**
+(`outputs/holdout_bootstrap_v1_1.csv`). Lower Brier is better, so a
+negative ΔBrier favors the full model.
+
+The 25% split is a **first-run / development-stage internal evaluation
+set** (seed 42). It was scored during the original pipeline and used by
+the research-triage gate. It is not an external, pristine, or
+independently confirmatory sample. Inferential *p*-values come from
+training-only cross-validation, not from the holdout.
 
 **Repeated 5×5 CV** on the training portion only (n = 3,831;
 `outputs/repeated_cv_summary.csv`):
 
 - ED-history mean ROC-AUC **0.685**, PR-AUC **0.307**, Brier **0.108**
 - Full-model mean ROC-AUC **0.714**, PR-AUC **0.343**, Brier **0.106**
-- Mean increment **+0.030 ROC-AUC**, **+0.036 PR-AUC**
+- Mean increment **+0.030 ROC-AUC**, **+0.036 PR-AUC**, **−0.0017 Brier**
 
-**Pre-registered Family A** (Nadeau–Bengio corrected t-test, df = 24;
-`outputs/statistical_inference.csv`):
+**Family A** (documented analysis plan; Nadeau–Bengio corrected t-test,
+df = 24; `outputs/statistical_inference.csv` and
+`outputs/statistical_inference_intervals_v1_1.csv`):
 
-- ROC-AUC mean difference **+0.0295**, *t* = 2.437, *p* = 0.0226
-- PR-AUC mean difference **+0.0359**, *t* = 3.385, *p* = 0.0024
-- Brier mean difference **−0.0017**, *t* = −1.655, *p* = 0.1110
+- ROC-AUC mean difference **+0.0295**, *t* = 2.437, *p* = 0.0226, 95% CI **0.0045 to 0.0546**
+- PR-AUC mean difference **+0.0359**, *t* = 3.385, *p* = 0.0024, 95% CI **0.0140 to 0.0578**
+- Brier mean difference **−0.0017**, *t* = −1.655, *p* = 0.1110, 95% CI **−0.0038 to +0.0004**
 
-The primary discrimination hypothesis is supported for ROC-AUC and
-PR-AUC under the pre-specified analysis. The Brier increment was
-directionally favorable and was not statistically detected under that
-analysis.
+The primary discrimination contrast is supported for ROC-AUC and PR-AUC
+under the plan-specified Nadeau–Bengio analysis. The Brier increment was
+directionally favorable (lower Brier is better) and was not statistically
+detected. The study is not formally preregistered; see
+[`docs/research_chronology.md`](docs/research_chronology.md).
 
 **Family B** (five leave-one-block-out contrasts vs the full model,
 Holm–Bonferroni within each metric): no contrast showed a statistically
 detectable performance change. That is not evidence that any block is
 unnecessary.
 
-A repeat-level sensitivity analysis (df = 4) left ROC and PR
-significant; it does not replace the pre-registered Nadeau–Bengio test.
-See [`docs/results.md`](docs/results.md).
+A repeat-level diagnostic (df = 4) is not a more conservative
+inferential test: the five repeats share the same training sample, so
+smaller *p*-values understate uncertainty and do not replace the
+Nadeau–Bengio result. See [`docs/results.md`](docs/results.md).
+
+v1.1 adult-only sensitivity (AGEY3X ≥ 18; train n = 3,162, holdout
+n = 1,048): CV ΔROC +0.0194 (*p* = 0.113), ΔPR +0.0299 (*p* = 0.0029),
+ΔBrier −0.0014 (*p* = 0.196). The adult ROC increment was not detected.
+That result is reported because the mixed-age cohort is a population
+definition issue; it is not used to replace the primary analysis.
 
 ## Methods (concise)
 
@@ -86,19 +104,27 @@ See [`docs/results.md`](docs/results.md).
 - **Preprocessing:** sklearn `Pipeline` / `ColumnTransformer`; median
   impute + scale for numeric columns; most-frequent impute + one-hot
   encode for categorical columns. Fitted inside each training fold.
-- **Validation:** 25% stratified holdout (`random_state = 42`); then
-  5×5 `RepeatedStratifiedKFold` (`random_state = 2021`) on the
-  reconstructed training portion only.
-- **Metrics:** ROC-AUC, PR-AUC, Brier. Threshold metrics at 0.5 are
-  exploratory only. Calibration is a quantile-binned reliability table
-  for the first-run full model.
+- **Validation:** 25% stratified first-run internal evaluation
+  (`random_state = 42`); then 5×5 `RepeatedStratifiedKFold`
+  (`random_state = 2021`) on the reconstructed training portion only.
+- **Metrics:** ROC-AUC, PR-AUC, Brier. PR-AUC is reported because
+  prevalence is modest (~0.136); it is more sensitive to positive-class
+  ranking than ROC-AUC. Lower Brier is better. Threshold metrics at 0.5
+  are exploratory only. Calibration: locked reliability diagram plus
+  v1.1 intercept/slope assessment on the first-run holdout (not
+  recalibration).
 - **Inference:** Nadeau–Bengio corrected resampled *t*-test on 25 paired
-  fold differences; Family A unadjusted; Family B Holm–Bonferroni
-  separately for ROC, PR, and Brier.
+  fold differences; Family A unadjusted across three complementary
+  metrics; Family B Holm–Bonferroni separately for ROC, PR, and Brier.
+- **Estimand:** unweighted person-level predictive performance on the
+  analytic sample. MEPS survey weights are recorded and not applied.
+
+Software versions for the v1.1 freeze: [`docs/environment_v1_1.md`](docs/environment_v1_1.md).
 
 Full methods: [`docs/methodology.md`](docs/methodology.md).
 Limitations: [`docs/limitations.md`](docs/limitations.md).
-Pre-registration: [`docs/pre_registration_block_ablation_plan.md`](docs/pre_registration_block_ablation_plan.md).
+Analysis plan (not formal preregistration): [`docs/pre_registration_block_ablation_plan.md`](docs/pre_registration_block_ablation_plan.md).
+Chronology: [`docs/research_chronology.md`](docs/research_chronology.md).
 Research manuscript: [`docs/manuscript.md`](docs/manuscript.md).
 
 ## What this project is not
@@ -150,6 +176,7 @@ Entry points that exist in the repository (for the completed sequence):
 | `python -m feasibility.ses_ablation` | B5 |
 | `python -m feasibility.statistical_inference` | Nadeau–Bengio + Holm (saved CSVs only) |
 | `python -m feasibility.robustness_repeat_level` | Family A repeat-level check (saved CSVs only) |
+| `python -m feasibility.revision_v1_1` | v1.1 reporting analyses only (`*_v1_1*` filenames) |
 
 ## Data use
 
@@ -164,7 +191,7 @@ Expenditure Panel Survey when using the data. See
 
 ```
 feasibility/    analysis modules
-docs/           methods, results, limitations, pre-registration
+docs/           methods, results, limitations, analysis plan, chronology
 tests/          unit tests
 data/raw/       user-supplied h245.dta (gitignored)
 outputs/        saved tables and figures from the completed analysis

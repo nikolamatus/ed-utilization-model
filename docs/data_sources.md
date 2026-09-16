@@ -93,19 +93,24 @@ banned. **Round 7 overlaps 2021/2022 and is not used as a predictor.**
 ## Sentinels, negatives, and missingness
 
 Documented MEPS codes **−1, −7, −8, −9** (inapplicable, refused, don’t
-know, not ascertained) are never treated as numeric measurements. Any
-other negative is also treated as non-usable. `features.recode_sentinels`
-maps those values to missing. The model then applies median imputation
-(numeric) or most-frequent imputation (categorical) inside the training
-fold.
+know, not ascertained) are never treated as numeric measurements. That
+named set is **not exhaustive**. Any other negative is also treated as
+non-usable, including codes that appear in this HC-245 extract outside
+the named list (for example `EMPST6` = −15). `features.recode_sentinels`
+maps all of those values to missing. The model then applies median
+imputation (numeric) or most-frequent imputation (categorical) inside
+the training fold.
 
 Raw-file missingness after this recode (`outputs/missingness.csv`,
 N = 5,565) is highest for `EMPST6` (21.89% non-usable) and is typically
 about 5–8% for other candidates. In the **analytic cohort**
-(N = 5,108), `RTHLTH6` and `MNHLTH6` missingness after recode is 0.06%
-and 0.10% (3 and 5 sentinels). Analytic-cohort missingness for other
-predictors was not re-audited as a separate table except where an
-experiment requested it.
+(N = 5,108; `outputs/missingness_analytic_cohort_v1_1.csv`), `EMPST6` is
+non-usable for 16.01%, overwhelmingly because employment status is
+structurally inapplicable for children. Those values are mode-imputed
+(modal category: employed) and must not be read as causal employment
+effects. `RTHLTH6` and `MNHLTH6` missingness after recode is 0.06% and
+0.10%. `HAVEUS6` is 1.27%. Other modeled predictors are complete after
+recode.
 
 Missingness is not used as a predictor. No missingness indicators were
 added.

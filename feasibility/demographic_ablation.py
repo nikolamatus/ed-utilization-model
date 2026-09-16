@@ -366,7 +366,9 @@ vs ED-history. {vs_age_clause}
 - Holdout Δ full−ED: ROC {ho.loc['delta_full_minus_ed', 'roc_auc']:+.3f}, PR {ho.loc['delta_full_minus_ed', 'pr_auc']:+.3f}
 - Holdout Δ no-demographics−ED: ROC {ho.loc['delta_nodemo_minus_ed', 'roc_auc']:+.3f}, PR {ho.loc['delta_nodemo_minus_ed', 'pr_auc']:+.3f}
 
-Treat the holdout only as a locked confirmation, not as evidence used to pick a model.
+Treat the holdout as a first-run internal evaluation set, not as
+evidence used to pick a model. It is not external, pristine, or
+independently confirmatory validation.
 
 Unweighted MEPS Panel 24 analytic-sample results only. Not clinical utility,
 causality, national performance, or deployment readiness.

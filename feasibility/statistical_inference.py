@@ -1,5 +1,5 @@
 """
-Pre-registered inferential pass: Nadeau–Bengio corrected t-tests and
+Documented-plan inferential pass: Nadeau–Bengio corrected t-tests and
 Holm–Bonferroni within Family B.
 
 Reads only already-saved 5x5 fold-level CSVs. Does not refit models.
@@ -393,7 +393,7 @@ def write_summary(path, table: pd.DataFrame, test_train_ratio: float) -> None:
             names = ", ".join(hits["contrast_id"] + " " + hits["contrast"])
             family_b_sig.append(f"- {metric}: Holm-significant: {names}.")
 
-    md = f"""# Pre-registered statistical inference (Nadeau–Bengio + Holm)
+    md = f"""# Statistical inference (Nadeau–Bengio + Holm)
 
 Date of analysis: 2026-09-12 (after B4 and B5 exist).
 Source plan: `docs/pre_registration_block_ablation_plan.md` (locked 2026-09-12).
@@ -432,8 +432,10 @@ The 2.5th–97.5th percentile ranges in earlier CV summaries remain
 descriptive empirical ranges. They are not confidence intervals and are
 not relabeled as such here.
 
-Locked holdout numbers below are confirmation only. They were not used
-to choose hypotheses, compute p-values, or select a model.
+First-run holdout numbers below are descriptive internal-evaluation
+metrics. They were not used to choose hypotheses, compute p-values, or
+select a model. They are not external or independently confirmatory
+validation.
 
 ## Results
 
@@ -483,11 +485,11 @@ does not establish independence of predictor information. Block ablation
 does not isolate independent causal contribution and does not fully
 resolve redundancy.
 
-Descriptive repeated-CV means, these inferential tests, and the locked
+Descriptive repeated-CV means, these inferential tests, and the first-run
 holdout are three different objects. The holdout increment (Full vs
-ED-history about +0.065 ROC / +0.085 PR) remains a confirmation result
-and was larger than the CV mean increment. It was not used here for
-inference.
+ED-history about +0.065 ROC / +0.085 PR) is a first-run internal
+evaluation result and was larger than the CV mean increment. It was not
+used here for inference.
 
 Unweighted MEPS Panel 24 analytic-sample results only. Not clinical
 utility, clinical validation, causality, national performance,

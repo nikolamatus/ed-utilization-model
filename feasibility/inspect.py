@@ -16,7 +16,10 @@ def basic_shape(df: pd.DataFrame) -> dict:
 
 def missingness_table(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
     """
-    True NA and MEPS sentinels are both non-usable. valid_count excludes both.
+    True NA, documented MEPS sentinels (−1/−7/−8/−9), and any other
+    negative (for example EMPST6 = −15) are all non-usable. valid_count
+    excludes all of them. sentinel_count counts only the named documented
+    set; other negatives still enter nonusable_count via recode_sentinels.
     """
     rows = []
     for col in columns:

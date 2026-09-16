@@ -45,8 +45,11 @@ YEARIND_ALL_FOUR_YEARS = 1
 PREDICTION_CUTOFF_YEAR = 2021
 OUTCOME_YEAR = 2022
 
-# Documented MEPS missing/inapplicable/refused/DK codes used in this file.
-# These are never valid numeric measurements.
+# Documented MEPS missing/inapplicable/refused/DK codes commonly used
+# in this file. They are never valid numeric measurements. The set is
+# not exhaustive: recode_sentinels() treats every negative value as
+# non-usable, including codes such as EMPST6 = -15 that appear in HC-245
+# but are not in this named set.
 SENTINEL_VALUES = frozenset({-1, -7, -8, -9})
 
 ED_VISIT_VARS = {

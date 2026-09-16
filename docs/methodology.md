@@ -115,7 +115,7 @@ Treatment (`feasibility/config.py`):
 - **Categorical:** `SEX`, `RACETHX`, `REGIONY3`, `MARRY6X`, `RTHLTH6`,
   `MNHLTH6`, `INSCOVY3`, `HAVEUS6`, `POVCATY3`, `EMPST6`
 
-### Pre-registered Family B blocks
+### Documented Family B blocks
 
 | ID | Block removed | Variables |
 |---|---|---|
@@ -140,13 +140,26 @@ before fitting.
 
 ## 9. Sentinel and missing-data handling
 
-MEPS codes −1, −7, −8, −9, and any other negative, are recoded to
-missing (`features.recode_sentinels`). They are never passed through as
-numeric measurements. Missing values are then imputed inside the
-sklearn Pipeline (median for numeric, most frequent for categorical).
-This is a single-imputation first-pass strategy, not multiple
-imputation. Missingness is not used as a predictor. No missingness
-indicators were added.
+Documented MEPS codes −1, −7, −8, and −9 are recoded to missing. That
+named set is **not exhaustive**: `features.recode_sentinels` treats
+**every negative value** as non-usable, including codes that appear in
+HC-245 but are outside the named set (for example `EMPST6` = −15). They
+are never passed through as numeric measurements.
+
+Missing values are then imputed inside the sklearn Pipeline (median for
+numeric, most frequent for categorical). This is a single-imputation
+first-pass strategy, not multiple imputation. Missingness is not used
+as a predictor. No missingness indicators were added.
+
+On the analytic cohort, `EMPST6` is non-usable for 16.01% of persons,
+overwhelmingly because employment status is structurally inapplicable
+for children. Those values are mode-imputed within each training fit
+(the modal category is employed). `EMPST6` coefficients must not be
+interpreted as causal or substantive employment effects. The imputer is
+fit on training data only, so this step does not create evaluation-set
+leakage. The adult-only sensitivity is a related population check. An
+explicit inapplicable category was not used and could be considered in
+future work.
 
 ## 10. Preprocessing
 
@@ -178,20 +191,30 @@ default L2 penalty, `C=1.0`, `max_iter=2000`, `random_state=42`).
 Hyperparameters were not tuned. No other algorithm was added after the
 first-run model.
 
-## 13. Locked holdout evaluation
+## 13. First-run holdout evaluation
 
 Person-level stratified split, `test_size=0.25`, `random_state=42`,
 stratified on the binary 2022 outcome (`modeling._split`). Training
 n = 3,831; holdout n = 1,277 (173 events).
 
-The holdout was a confirmation / generalization check for the selected
-primary comparison. It was **not** used to choose the model, tune
-hyperparameters, choose hypotheses, or compute inferential p-values.
+This split is a **first-run / development-stage internal evaluation
+set**. It was scored in the original pipeline. It was **not** used to
+choose the model, tune hyperparameters, choose hypotheses, or compute
+inferential p-values. It **was** used by the research-triage gate
+(`report.decide_gate`) and by Design A add-on ablation. It is not
+external, pristine, or independently confirmatory.
 
 A first-run research triage “decision gate” (`report.decide_gate`) was
 computed from holdout metrics. That gate is an engineering/research
 triage tool, not a statistical decision rule and not a claim of
 clinical readiness.
+
+v1.1 adds person-level bootstrap percentile intervals
+(`outputs/holdout_bootstrap_v1_1.csv`; B = 2,000; seed 20210915) and
+calibration intercept/slope assessment
+(`outputs/holdout_calibration_v1_1.csv`) on this same split. Those
+quantities do not replace the locked point estimates and are not
+recalibration.
 
 ## 14. Repeated cross-validation
 
@@ -210,10 +233,17 @@ model. The 25 folds are **not** treated as 25 independent observations.
 
 ## 15. Calibration assessment
 
-For the first-run full model on the locked holdout, a quantile-binned
+For the first-run full model on the first-run holdout, a quantile-binned
 reliability table (`outputs/calibration.csv`) is written via
-`sklearn.calibration.calibration_curve`. Threshold metrics
-(sensitivity, specificity, precision, recall, accuracy) at 0.5 are
+`sklearn.calibration.calibration_curve`. v1.1 adds intercept and slope
+from an unpenalized logistic regression of holdout `y` on `logit(p)`
+(`outputs/holdout_calibration_v1_1.csv`): Cox calibration
+`logit(Y) = a + b logit(p)` plus calibration-in-the-large (a with b
+fixed at 1). That fit is **assessment
+only**: predicted probabilities are not replaced, and the split is not
+independent external validation. The joint intercept is the offset at
+predicted p = 0.5 when slope is free; overall prevalence calibration
+is described by mean(p) versus mean(y) and by CITL. Threshold metrics at 0.5 are
 exploratory descriptive metrics only. They are not an optimized or
 clinical operating point.
 
@@ -230,7 +260,7 @@ A death-sensitivity analysis in the same module dropped `YEARIND == 1`
 decedents (28 train / 9 test) and refit the full model. It did not
 change the production cohort or model.
 
-## 17. Pre-registered block-ablation analysis
+## 17. Documented block-ablation analysis
 
 Implemented in `feasibility/age_ablation.py`,
 `demographic_ablation.py`, `health_ablation.py`,
@@ -260,8 +290,11 @@ factors on the one-hot design matrix. Flag threshold |association| >
 0.5. The diagnostic did **not** drop predictors, change the production
 model, or alter the contrast set.
 
-Infinite VIFs on one-hot columns are a structural artifact of encoding
-without dropping a reference level, not evidence of a data error.
+Infinite VIFs on one-hot columns in the locked table are a structural
+artifact of encoding without dropping a reference level, not evidence
+of a data error. A v1.1 diagnostic with `drop="first"` yields finite
+VIFs, all < 5 (`outputs/predictor_vif_drop_reference_v1_1.csv`). VIF
+was never a removal rule.
 
 ## 19. Statistical inference
 
@@ -321,17 +354,21 @@ two-sided *t*-test of those five means against 0 is run (\(\mathrm{df}
 = 4\)).
 
 **The repeat-level test was an additional sensitivity analysis and did
-not replace the pre-registered Nadeau–Bengio analysis.**
+not replace the Nadeau–Bengio analysis.**
 
-The five repeats are the **repeat-level resampling unit** used for that
-conservative sensitivity analysis. They are **not** five independent
-population samples.
+The five repeats reuse the same underlying training sample. Collapsing
+each repeat to one mean and treating those five means as independent
+understates uncertainty. Smaller repeat-level *p*-values are therefore
+**not** stronger evidence and must not be read as a more conservative
+inferential test. Repeat-level Brier significance does not overturn the
+primary Brier result (*p* = 0.1110).
 
 ## 21. Reproducibility
 
 Python ≥ 3.10. Dependencies: `pandas`, `numpy`, `scikit-learn`,
-`scipy`, `matplotlib` (`pyproject.toml`). `scipy` is required by the
-inference, robustness, and diagnostics modules.
+`scipy`, `matplotlib` (`pyproject.toml`). Exact versions used to
+document the v1.1 freeze are in `docs/environment_v1_1.md`. `scipy` is
+required by the inference, robustness, and diagnostics modules.
 
 Install and test:
 
@@ -344,7 +381,8 @@ Place official `h245.dta` at `data/raw/h245.dta`. Do **not** re-run
 `python -m feasibility.run` against a completed analysis; that command
 overwrites first-run holdout artifacts.
 
-Later modules write their own filenames. The completed sequence was:
+Later modules write their own filenames. The completed v1.0 sequence
+was:
 
 1. `python -m feasibility.run`
 2. `python -m feasibility.ablation`
@@ -358,8 +396,20 @@ Later modules write their own filenames. The completed sequence was:
 10. `python -m feasibility.statistical_inference`
 11. `python -m feasibility.robustness_repeat_level`
 
+v1.1 reporting analyses (new filenames only):
+
+12. `python -m feasibility.revision_v1_1`
+
 Seeds: holdout / logistic `random_state=42`; repeated CV
-`random_state=2021`.
+`random_state=2021`; v1.1 holdout bootstrap `20210915`.
+
+Locked v1.0 generated summaries (for example
+`outputs/statistical_inference_summary.md`,
+`outputs/repeated_cv_summary.md`,
+`outputs/robustness_repeat_level_summary.md`) retain historical wording
+such as “Pre-registered,” “untouched,” or “conservative.” Those files
+are preserved byte-for-byte. Current interpretation is in this document,
+the manuscript, and the generator templates.
 
 ## Research positioning
 

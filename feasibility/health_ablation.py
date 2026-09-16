@@ -458,7 +458,9 @@ ED-history" deltas.
 - Holdout Δ no-health−ED: ROC {ho.loc['delta_nohealth_minus_ed', 'roc_auc']:+.3f}, PR {ho.loc['delta_nohealth_minus_ed', 'pr_auc']:+.3f}
 - Holdout Δ no-health−full: ROC {ho.loc['delta_nohealth_minus_full', 'roc_auc']:+.3f}, PR {ho.loc['delta_nohealth_minus_full', 'pr_auc']:+.3f}
 
-Treat the holdout only as a locked confirmation, not as evidence used to pick a model.
+Treat the holdout as a first-run internal evaluation set, not as
+evidence used to pick a model. It is not external, pristine, or
+independently confirmatory validation.
 
 ## 9. Missingness as a limitation
 {miss_note}

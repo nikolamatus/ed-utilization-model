@@ -2,7 +2,7 @@
 Repeat-level robustness check for Family A only (Full − ED-history).
 
 Uses the saved 25 fold-level deltas. Does not refit models and does not
-replace the pre-registered Nadeau–Bengio test.
+replace the plan-specified Nadeau–Bengio test.
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ N_REPEATS = 5
 N_SPLITS = 5
 ALPHA = 0.05
 
-# Pre-registered Nadeau–Bengio Family A results (outputs/statistical_inference.csv).
+# Plan-specified Nadeau–Bengio Family A results (outputs/statistical_inference.csv).
 # Quoted for comparison only; not recomputed here as the primary test.
 NB_PRIMARY = {
     "roc_auc": {"t": 2.437488418766643, "p": 0.02257265024089372, "df": 24, "significant": True},
@@ -110,8 +110,10 @@ def analyze_family_a(df: pd.DataFrame | None = None) -> tuple[pd.DataFrame, pd.D
             "source_file": A1_PATH,
             "source_column": col,
             "note": (
-                "Repeat-level t-test uses 5 independent repeats (df=4). "
-                "It does not replace the pre-registered Nadeau-Bengio test."
+                "Repeat-level t-test uses 5 repeat means (df=4). The repeats "
+                "share the same training sample, so this is not a more "
+                "conservative variance estimate. It does not replace the "
+                "plan-specified Nadeau-Bengio test."
             ),
         })
     return means, pd.DataFrame(rows)
@@ -149,9 +151,10 @@ def write_summary(path, means: pd.DataFrame, tests: pd.DataFrame) -> None:
 
     md = f"""# Repeat-level robustness check (Family A only)
 
-Diagnostic only. The pre-registered primary test remains the
-Nadeau–Bengio corrected t-test (df = 24) on the 25 paired fold deltas.
-This file does not replace that test and was not applied to Family B.
+Descriptive sensitivity diagnostic only. The plan-specified primary test
+remains the Nadeau–Bengio corrected t-test (df = 24) on the 25 paired
+fold deltas. This file does not replace that test and was not applied
+to Family B.
 
 ## Method
 
@@ -162,10 +165,12 @@ PR-AUC, and Brier, yielding 5 numbers per metric. A standard one-sample
 two-sided t-test of those 5 repeat-level means against 0 was run
 (df = 4).
 
-This test uses only 5 independent observations (the repeats). It is far
-less powered than the Nadeau–Bengio test. It is run specifically as a
-conservative robustness check on the Family A ROC result (NB p = 0.0226),
-which was close to the 0.05 threshold under the primary correction.
+The five repeats reuse the same underlying training population. Treating
+the five repeat means as independent observations understates
+uncertainty relative to the Nadeau–Bengio correction on the 25 paired
+fold differences. Smaller repeat-level p-values are therefore **not**
+stronger evidence and must not be read as a more conservative inferential
+test.
 
 No model was refit. Existing experiment outputs were not modified.
 
@@ -173,7 +178,7 @@ No model was refit. Existing experiment outputs were not modified.
 
 {mean_table}
 
-## Comparison with the pre-registered Nadeau–Bengio test
+## Comparison with the plan-specified Nadeau–Bengio test
 
 {cmp_table}
 
@@ -185,15 +190,18 @@ No model was refit. Existing experiment outputs were not modified.
 
 The primary hypothesis is that the full model has higher discrimination
 than 3-year ED history. Under Nadeau–Bengio, ROC (p = 0.0226) and PR
-(p = 0.0024) were significant; Brier was not.
+(p = 0.0024) were significant; Brier was not (p = 0.1110).
 
-Under this conservative repeat-level check, ROC is {"significant" if roc_survives else "not significant"}
+Under this repeat-level diagnostic, ROC is {"significant" if roc_survives else "not significant"}
 and PR is {"significant" if pr_survives else "not significant"} at alpha = 0.05.
-{"The Family A discrimination finding survives this check for both ROC and PR." if (roc_survives and pr_survives) else "The Family A ROC finding does not survive this more conservative check." if (not roc_survives and pr_survives) else "The Family A PR finding does not survive this more conservative check." if (roc_survives and not pr_survives) else "The Family A discrimination finding does not survive this more conservative check for ROC or PR."}
+The smaller p-values reflect understated variance from treating five
+overlapping repeats as independent, not a stronger test. Repeat-level
+Brier significance does not overturn the primary Brier result
+(Nadeau–Bengio p = 0.1110).
 
-This changes no prior conclusion by itself. It is additional evidence to
-report alongside the pre-registered Nadeau–Bengio result, not a
-replacement for it.
+This changes no prior conclusion by itself. It is additional descriptive
+evidence to report alongside the plan-specified Nadeau–Bengio result,
+not a replacement for it.
 
 Unweighted MEPS Panel 24 analytic-sample results only.
 """

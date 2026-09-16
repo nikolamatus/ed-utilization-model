@@ -178,11 +178,11 @@ def test_every_column_in_x_has_availability_at_or_before_cutoff():
 
 
 def test_negative_sentinels_become_missing_not_numeric_values():
-    series = pd.Series([0, 1, -1, -7, -8, -9, 3])
+    series = pd.Series([0, 1, -1, -7, -8, -9, -15, 3])
     recoded = features.recode_sentinels(series)
     assert recoded.tolist()[:2] == [0.0, 1.0]
-    assert recoded.iloc[2:6].isna().all()
-    assert recoded.iloc[6] == 3.0
+    assert recoded.iloc[2:7].isna().all()
+    assert recoded.iloc[7] == 3.0
 
     df = _toy_df()
     X = features.build_feature_matrix(df, ["TTLPY3X", "EMPST6", "ERTOTY1"])

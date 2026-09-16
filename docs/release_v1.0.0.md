@@ -22,7 +22,7 @@
 
 **Primary finding:** The full pre-cutoff model demonstrated incremental discrimination beyond three years of ED utilization history.
 
-**Pre-registered Family A** (Nadeau–Bengio corrected *t*-test; values from `outputs/statistical_inference.csv`):
+**Family A** (documented analysis plan; Nadeau–Bengio corrected *t*-test; values from `outputs/statistical_inference.csv`):
 
 - ROC-AUC mean difference +0.0295, *p* = 0.0226
 - PR-AUC mean difference +0.0359, *p* = 0.0024
@@ -32,7 +32,7 @@
 
 This is a reproducible research artifact. It is **not** a clinically validated prediction model, a national risk calculator, a causal study, a deployment-ready system, or evidence of clinical utility.
 
-Reported metrics are unweighted analytic-sample scores on MEPS Panel 24. They are not national population estimates. The locked holdout is a confirmation split. Inferential Family A results come from training-only repeated cross-validation. A ≥2-visit construct was counted descriptively and was not modeled.
+Reported metrics are unweighted analytic-sample scores on MEPS Panel 24. They are not national population estimates. The 25% split is a first-run internal evaluation set, not external or independently confirmatory validation. Inferential Family A results come from training-only repeated cross-validation. A ≥2-visit construct was counted descriptively and was not modeled.
 
 ## Contents of this release
 
@@ -41,7 +41,7 @@ Reported metrics are unweighted analytic-sample scores on MEPS Panel 24. They ar
 - Methodology (`docs/methodology.md`)
 - Results (`docs/results.md`)
 - Limitations (`docs/limitations.md`)
-- Pre-registration (`docs/pre_registration_block_ablation_plan.md`)
+- Documented analysis plan (`docs/pre_registration_block_ablation_plan.md`; filename is historical)
 - Related work (`docs/related_work.md`)
 - Manuscript draft (`docs/manuscript.md`)
 - Saved analysis outputs (`outputs/`)

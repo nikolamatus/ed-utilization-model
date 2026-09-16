@@ -287,7 +287,7 @@ def write_summary(path, fold_df: pd.DataFrame, holdout: pd.DataFrame, spec: Bloc
     ])
     md = f"""# {spec.title}
 
-Pre-registered Family B contrast {spec.experiment_id} (2026-09-12 plan).
+Documented Family B contrast {spec.experiment_id} (2026-09-12 plan).
 Same analytic cohort, same 2022 any-ED outcome, same training portion
 (n=3,831), same 5x5 RepeatedStratifiedKFold
 (random_state={repeated_cv.CV_RANDOM_STATE}) as the locked repeated-CV
@@ -358,7 +358,9 @@ Remaining increment vs ED-history from earlier leave-block-out experiments:
 - Holdout Δ no-{spec.slug}−ED: ROC {ho.loc[f'delta_{p}_minus_ed', 'roc_auc']:+.3f}, PR {ho.loc[f'delta_{p}_minus_ed', 'pr_auc']:+.3f}
 - Holdout Δ no-{spec.slug}−full: ROC {ho.loc[f'delta_{p}_minus_full', 'roc_auc']:+.3f}, PR {ho.loc[f'delta_{p}_minus_full', 'pr_auc']:+.3f}
 
-Treat the holdout only as a locked confirmation, not as evidence used to pick a model.
+Treat the holdout as a first-run internal evaluation set, not as
+evidence used to pick a model. It is not external, pristine, or
+independently confirmatory validation.
 
 Unweighted MEPS Panel 24 analytic-sample results only. Not clinical utility,
 causality, national performance, or deployment readiness.

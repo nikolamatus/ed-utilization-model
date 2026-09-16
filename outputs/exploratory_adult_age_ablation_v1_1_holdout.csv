@@ -1,0 +1,2 @@
+n_train,n_holdout,holdout_events,holdout_prevalence,full_roc_auc,full_pr_auc,full_brier,noage_roc_auc,noage_pr_auc,noage_brier,delta_roc_noage_minus_full,delta_pr_noage_minus_full,delta_brier_noage_minus_full
+3162,1048,166,0.15839694656488548,0.7585785318143321,0.4302960332114648,0.11403805165450959,0.7573901046362319,0.4195674976924863,0.1146948797591615,-0.0011884271781001932,-0.01072853551897851,0.0006568281046519103

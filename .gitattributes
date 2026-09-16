@@ -1,0 +1,15 @@
+# Normalize source and documentation to LF in the repository.
+# Do not treat locked analysis artifacts as text: renormalizing them
+# would change historical hashes.
+* text=auto
+
+*.py text
+*.md text
+*.toml text
+*.txt text
+*.json -text
+*.csv -text
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.dta binary

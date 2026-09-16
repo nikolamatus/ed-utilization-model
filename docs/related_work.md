@@ -317,8 +317,8 @@ asking which machine-learning algorithm performs best.
 
 The study further examines whether observed incremental performance is
 robust across repeated stratified cross-validation and a
-pre-registered Nadeau–Bengio test, and whether removal of
-pre-specified predictor blocks produces statistically detectable
+plan-specified Nadeau–Bengio test, and whether removal of
+documented predictor blocks produces statistically detectable
 performance changes.
 
 This is best understood as an **incremental empirical and

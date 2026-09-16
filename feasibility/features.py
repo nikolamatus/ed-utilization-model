@@ -34,11 +34,13 @@ _ROUND_89_MOD = re.compile(r"^[A-Z]+(8|9)_M\d+$", re.IGNORECASE)
 
 def recode_sentinels(series: pd.Series) -> pd.Series:
     """
-    Convert MEPS negative sentinels and other negatives to NA.
+    Convert MEPS negative sentinel codes and any other negative to NA.
 
-    -1 / -7 / -8 / -9 are documented inapplicable/refused/DK/not-ascertained
-    codes. They are not numeric measurements and must not be imputed as -1
-    later. Any other negative is also treated as non-usable.
+    Documented MEPS codes −1 / −7 / −8 / −9 (inapplicable, refused, DK,
+    not ascertained) are never numeric measurements. The named set is not
+    exhaustive: HC-245 also contains other negatives (for example EMPST6
+    = −15). Any negative is treated as non-usable and must not be imputed
+    as a numeric value.
     """
     numeric = pd.to_numeric(series, errors="coerce")
     return numeric.mask(numeric.isin(config.SENTINEL_VALUES) | (numeric < 0))

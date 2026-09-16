@@ -192,13 +192,16 @@ Numeric VIFs (all < 5):
 | `ERTOTY2` | 1.14 |
 | `ERTOTY3` | 1.14 |
 
-All 45 one-hot encoded columns have infinite VIF. That is a structural
-artifact of `OneHotEncoder` without dropping a reference level, not a
-finding that those categories are independently collinear in a
-substantive sense.
+All 45 one-hot encoded columns in the locked table have infinite VIF.
+That is a structural artifact of `OneHotEncoder` without dropping a
+reference level (dummy-variable trap), not a finding that those
+categories are independently collinear in a substantive sense.
 
-The diagnostic does **not** prove predictor independence and did not
-modify the production model.
+The corrected v1.1 diagnostic (`outputs/predictor_vif_drop_reference_v1_1.csv`)
+drops one reference level per categorical variable. All 40 remaining
+design-matrix VIFs are finite and **< 5** (max 3.68 on `AGEY3X`). That
+does not prove independence: pairwise η associations remain. VIF is
+descriptive only and did **not** modify the production model.
 
 ---
 
@@ -267,9 +270,12 @@ certainty.
 
 Source: `outputs/robustness_repeat_level_test.csv`. Family A only.
 Five repeat-level means; one-sample t-test, df = 4. Additional
-sensitivity analysis; **does not replace** the pre-registered
-Nadeau–Bengio test. The five repeats are the repeat-level resampling
-unit, not five independent population samples.
+descriptive sensitivity analysis; **does not replace** the
+Nadeau–Bengio test. The five repeats share the same training sample.
+Treating the five means as independent understates uncertainty;
+smaller repeat-level *p*-values are **not** stronger evidence and are
+not a more conservative test. Repeat-level Brier significance does
+not overturn the primary Brier result (p = 0.1110).
 
 Repeat-level means (Full − ED-history):
 
@@ -285,7 +291,8 @@ Repeat-level means (Full − ED-history):
 | PR-AUC | +11.850 | 0.0003 | 4 | yes | 0.0024 |
 | Brier | −9.747 | 0.0006 | 4 | yes | 0.1110 |
 
-**ROC and PR remain significant under the sensitivity analysis.**
+**ROC and PR remain significant under this diagnostic, which is not a
+more conservative test than Nadeau–Bengio.**
 
 **Brier differs from the primary NB conclusion and therefore does not
 replace the pre-specified Brier result.** The pre-specified Brier test
@@ -293,12 +300,17 @@ remains non-significant (p = 0.1110).
 
 ---
 
-## J. Locked holdout interpretation
+## J. First-run holdout interpretation
 
-The locked holdout was used as a confirmation / generalization check
-for the selected primary comparison (full vs 3-year ED history). It was
-not used to choose the model, tune hyperparameters, choose hypotheses,
-or perform statistical inference.
+The 25% split is a first-run / development-stage internal evaluation
+set. It was scored during the original pipeline and used by the
+research-triage gate. It was not used to choose the model, tune
+hyperparameters, choose hypotheses, or compute inferential p-values.
+It is not external validation.
+
+Person-level bootstrap percentile 95% CIs (B = 2,000, seed 20210915):
+ΔROC 0.028 to 0.101; ΔPR 0.047 to 0.121; ΔBrier −0.009 to −0.003
+(`outputs/holdout_bootstrap_v1_1.csv`). Lower Brier is better.
 
 The holdout increment (+0.065 ROC / +0.085 PR) and the repeated-CV mean
 increment (+0.030 ROC / +0.036 PR) are different objects. Inference
@@ -308,11 +320,17 @@ uses the training-only 5×5 paired differences.
 
 ## K. Scientific interpretation
 
-Under the pre-specified Family A analysis, the full pre-cutoff feature
-set showed statistically detectable incremental discrimination versus
-three-year ED history on ROC-AUC and PR-AUC in this analytic sample.
-Brier improvement was directionally favorable and was not statistically
-detected under that analysis.
+Under the plan-specified Family A analysis on the mixed-age sample, the
+full pre-cutoff feature set showed statistically detectable incremental
+discrimination versus three-year ED history on ROC-AUC (+0.0295, 95% CI
+0.0045 to 0.0546, *p* = 0.0226) and PR-AUC (+0.0359, 0.0140 to 0.0578,
+*p* = 0.0024). Brier improvement was directionally favorable (−0.0017;
+lower is better) and was not statistically detected (*p* = 0.1110; CI
+includes 0).
+
+The adult-only sensitivity did not detect the ROC increment (*p* =
+0.113). That finding is reported as a population-definition limitation
+and does not replace the primary mixed-age analysis.
 
 **No single pre-specified predictor block was shown to account for the
 incremental discrimination, and substantial incremental performance
