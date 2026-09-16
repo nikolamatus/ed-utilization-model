@@ -32,7 +32,7 @@ not evidence of clinical deployment performance.
 
 Analytic cohort: **N = 5,108** persons (`YEARIND == 1` and valid
 non-sentinel `ERTOTY1`–`ERTOTY4`); **693** 2022 ED events
-(prevalence **0.136**). Locked holdout: **n = 1,277** (173 events).
+(prevalence **0.13567**). Locked holdout: **n = 1,277** (173 events).
 
 **Locked 25% holdout** (`outputs/model_metrics.csv`):
 
@@ -108,7 +108,7 @@ definition issue; it is not used to replace the primary analysis.
   (`random_state = 42`); then 5×5 `RepeatedStratifiedKFold`
   (`random_state = 2021`) on the reconstructed training portion only.
 - **Metrics:** ROC-AUC, PR-AUC, Brier. PR-AUC is reported because
-  prevalence is modest (~0.136); it is more sensitive to positive-class
+  prevalence is modest (~0.1357); it is more sensitive to positive-class
   ranking than ROC-AUC. Lower Brier is better. Threshold metrics at 0.5
   are exploratory only. Calibration: locked reliability diagram plus
   v1.1 intercept/slope assessment on the first-run holdout (not
@@ -126,6 +126,9 @@ Limitations: [`docs/limitations.md`](docs/limitations.md).
 Analysis plan (not formal preregistration): [`docs/pre_registration_block_ablation_plan.md`](docs/pre_registration_block_ablation_plan.md).
 Chronology: [`docs/research_chronology.md`](docs/research_chronology.md).
 Research manuscript: [`docs/manuscript.md`](docs/manuscript.md).
+Publication tables: [`docs/tables/`](docs/tables/).
+Publication figures (redrawn from frozen CSVs): [`docs/figures/`](docs/figures/).
+Number audit: [`docs/manuscript_number_audit.md`](docs/manuscript_number_audit.md).
 
 ## What this project is not
 

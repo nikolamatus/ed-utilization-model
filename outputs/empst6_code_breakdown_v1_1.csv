@@ -1,0 +1,9 @@
+population,variable,code,n,pct_of_analytic,pct_of_nonusable,note
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,EMPST6,-1,801,15.68,97.92,Documented MEPS inapplicable/not ascertained class in this extract
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,EMPST6,-7,9,0.18,1.10,Documented MEPS refused class
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,EMPST6,-8,2,0.04,0.24,Documented MEPS DK class
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,EMPST6,-15,6,0.12,0.73,Negative code outside the named {-1,-7,-8,-9} set; treated as non-usable by recode_sentinels
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,EMPST6,all_nonusable,818,16.01,100.0,Union of negatives after recode_sentinels; missing_pct in missingness_analytic_cohort_v1_1.csv
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,EMPST6,nonusable_AGEY3X_lt_16,789,15.45,96.5,Share of non-usable EMPST6 among persons aged under 16
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,EMPST6,nonusable_AGEY3X_lt_18,803,15.72,98.2,Share of non-usable EMPST6 among persons aged under 18
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,AGEY3X,lt_18,898,17.58,,Persons under 18 in the analytic cohort (adult-only sensitivity denominator)
