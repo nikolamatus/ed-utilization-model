@@ -1,4 +1,4 @@
-# Reproducible Longitudinal ED Utilization Prediction Framework
+# Incremental Prediction of Future ED Utilization Beyond Historical ED Use
 
 Research and methodology project using public-use AHRQ Medical
 Expenditure Panel Survey (MEPS) data. This is **not** a clinical
@@ -19,14 +19,18 @@ year 2022** (`ERTOTY4 ≥ 1`). A ≥2-visit construct was counted
 descriptively and was **not modeled**.
 
 The ED-history baseline uses `ERTOTY1`, `ERTOTY2`, and `ERTOTY3`
-(2019–2021). The full model uses only information specified as available
-on or before the cutoff (or time-invariant), plus those three ED-history
-counts. `ERTOTY4` and other post-cutoff fields do not enter the
-predictor set.
+(2019–2021). The full model uses only variables classified as available
+on or before the prediction cutoff, together with time-invariant
+variables, plus those three ED-history counts. `ERTOTY4` and other
+post-cutoff fields do not enter the predictor set.
 
 Results are **unweighted predictive findings on the MEPS Panel 24
 analytic sample**. They are not national population estimates and are
 not evidence of clinical deployment performance.
+
+## What this study found
+
+In this MEPS Panel 24 analytic sample, adding pre-cutoff health, utilization, access, demographic, and socioeconomic information to three years of ED history produced a mean incremental ROC-AUC of 0.0295 and PR-AUC of 0.0359 under repeated training-only cross-validation. Both discrimination increments were statistically detectable under the plan-specified Nadeau–Bengio analysis. The corresponding Brier-score difference was −0.0017 and was not statistically detected. These findings indicate incremental predictive information beyond historical ED utilization in this analytic sample, but do not establish clinical usefulness, causality, generalizability, or deployment performance.
 
 ## Headline results (saved outputs)
 
@@ -36,12 +40,12 @@ non-sentinel `ERTOTY1`–`ERTOTY4`); **693** 2022 ED events
 
 **Locked 25% holdout** (`outputs/model_metrics.csv`):
 
-| Model | ROC-AUC | PR-AUC | Brier |
-|---|---:|---:|---:|
-| Prevalence only | 0.500 | 0.135 | 0.117 |
-| Prior-year ED (`ERTOTY3`) | 0.627 | 0.251 | 0.108 |
-| 3-year ED history | 0.709 | 0.331 | 0.105 |
-| Full regularized logistic | 0.774 | 0.416 | 0.099 |
+| Model                     | ROC-AUC | PR-AUC | Brier |
+| ------------------------- | ------: | -----: | ----: |
+| Prevalence only           |   0.500 |  0.135 | 0.117 |
+| Prior-year ED (`ERTOTY3`) |   0.627 |  0.251 | 0.108 |
+| 3-year ED history         |   0.709 |  0.331 | 0.105 |
+| Full regularized logistic |   0.774 |  0.416 | 0.099 |
 
 Holdout increment, full minus 3-year ED history: **+0.065 ROC-AUC**,
 **+0.085 PR-AUC**, **−0.006 Brier**. Person-level bootstrap percentile
@@ -49,6 +53,8 @@ Holdout increment, full minus 3-year ED history: **+0.065 ROC-AUC**,
 **0.047 to 0.121**, ΔBrier **−0.009 to −0.003**
 (`outputs/holdout_bootstrap_v1_1.csv`). Lower Brier is better, so a
 negative ΔBrier favors the full model.
+
+The holdout point estimates are larger than the cross-validation estimates; because the holdout was part of the first-run/development-stage pipeline, the cross-validation estimates are used for the primary inferential comparison.
 
 The 25% split is a **first-run / development-stage internal evaluation
 set** (seed 42). It was scored during the original pipeline and used by
@@ -71,10 +77,10 @@ df = 24; `outputs/statistical_inference.csv` and
 - PR-AUC mean difference **+0.0359**, *t* = 3.385, *p* = 0.0024, 95% CI **0.0140 to 0.0578**
 - Brier mean difference **−0.0017**, *t* = −1.655, *p* = 0.1110, 95% CI **−0.0038 to +0.0004**
 
-The primary discrimination contrast is supported for ROC-AUC and PR-AUC
-under the plan-specified Nadeau–Bengio analysis. The Brier increment was
-directionally favorable (lower Brier is better) and was not statistically
-detected. The study is not formally preregistered; see
+Under the plan-specified Nadeau–Bengio analysis, the full model showed
+statistically detectable incremental ROC-AUC and PR-AUC relative to the
+3-year ED-history baseline; the Brier-score increment was not
+statistically detected. The study is not formally preregistered; see
 [`docs/research_chronology.md`](docs/research_chronology.md).
 
 **Family B** (five leave-one-block-out contrasts vs the full model,
@@ -167,7 +173,7 @@ the locked analysis is not intended to be regenerated.
 Entry points that exist in the repository (for the completed sequence):
 
 | Command | Role |
-|---|---|
+| ------- | ---- |
 | `python -m feasibility.run` | First-run cohort, holdout, calibration (do not overwrite) |
 | `python -m feasibility.ablation` | Feature-family add-on ablation + death sensitivity |
 | `python -m feasibility.repeated_cv` | Training-only 5×5 CV |
