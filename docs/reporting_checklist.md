@@ -6,8 +6,8 @@ This checklist documents what the repository actually reports. It is
 
 | # | Item | Where reported | Status |
 | --- | --- | --- | --- |
-| 1 | Title identifies a prediction-model study | `docs/manuscript.md` title | Addressed |
-| 2 | Abstract: objective, design, results, predictive (not causal) interpretation | `docs/manuscript.md` §1 | Addressed; v1.1 tightens holdout/plan wording |
+| 1 | Title identifies a prediction-model study | `docs/manuscript.md` title (incremental value; no accuracy/deployment claim) | Addressed |
+| 2 | Abstract: objective, design, results, predictive (not causal) interpretation | `docs/manuscript.md` Abstract (Background/Objective/Methods/Results/Conclusions) | Addressed |
 | 3 | Scientific question / estimand | Incremental predictive value of the full pre-cutoff model vs 3-year ED history for next-year any-ED use, unweighted, analytic sample | Addressed |
 | 4 | Data source | MEPS HC-245 Panel 24, 2019–2022; `docs/data_sources.md` | Addressed |
 | 5 | Study population and inclusion | Unique `DUPERSID`; `YEARIND==1`; valid `ERTOTY1`–`Y4`; N = 5,108 | Addressed |
@@ -36,6 +36,32 @@ This checklist documents what the repository actually reports. It is
 | 28 | Limitations | Internal validation, unweighted estimand, single panel, COVID-era panel, no clinical utility claim | `docs/limitations.md` |
 | 29 | Reproducibility | Seeds 42 / 2021 / bootstrap 20210915; `pyproject.toml`; `docs/environment_v1_1.md`; pytest; locked outputs | Addressed |
 | 30 | Causal language avoided | Predictive value, discrimination, calibration, incremental performance | Enforce in v1.1 edits |
+
+## Publication package (v1.1 manuscript pass)
+
+| Artifact | Location | Status |
+| --- | --- | --- |
+| Journal-structured manuscript | `docs/manuscript.md` | Addressed |
+| Table 1 cohort flow | `docs/tables/table1_cohort.md` | Reported (no manufactured demographics) |
+| Table 2 primary comparison | `docs/tables/table2_primary_comparison.md` | Addressed |
+| Table 3 Family B Holm | `docs/tables/table3_block_ablation.md` | Addressed |
+| Table 4 sensitivities/diagnostics | `docs/tables/table4_sensitivity.md` | Addressed |
+| Figures 1–4 | `docs/figures/` | Redrawn from frozen CSVs; locked `outputs/figures/` untouched |
+| Number audit | `docs/manuscript_number_audit.md` | Documentation only |
+
+## Remaining reporting gaps (not forced into this study)
+
+| Item | Status | Note |
+| --- | --- | --- |
+| Conventional Table 1 demographic distributions | Not applicable / not available | Sex, race/ethnicity, region, poverty *counts* are not stored as frozen summaries; they were not manufactured |
+| Decision-curve / net benefit | Not evaluated | Would be a new analysis |
+| External or later-panel validation | Not done | Internal evaluation only |
+| Survey-weighted national performance | Not the estimand | Weights recorded, unused |
+| Official TRIPOD / TRIPOD+AI / PROBAST bibliographic records | Addressed in manuscript references | Informed by Collins et al. (2015, 2024) and Wolff et al. (2019); **no claim of compliance** |
+| PROBAST signalling-question worksheet | Not completed | Concepts informed limitations; no “low risk of bias” rating |
+| Recalibrated probabilities | Not done | Assessment only |
+| Missingness indicators | Not used | Documented limitation, especially EMPST6 |
+| Formal preregistration | Not claimed | Documented plan only |
 
 ## Explicitly not claimed
 
