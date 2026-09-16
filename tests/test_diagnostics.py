@@ -57,6 +57,8 @@ LOCKED_OUTPUTS = [
     config.OUTPUTS_DIR / "statistical_inference.csv",
     config.OUTPUTS_DIR / "statistical_inference_summary.md",
     config.FIGURES_DIR / "statistical_inference.png",
+    config.OUTPUTS_DIR / "robustness_repeat_level_test.csv",
+    config.OUTPUTS_DIR / "robustness_repeat_level_summary.md",
 ]
 
 

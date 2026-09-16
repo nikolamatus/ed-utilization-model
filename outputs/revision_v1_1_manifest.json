@@ -1,0 +1,14 @@
+{
+  "tag": "v1.1",
+  "primary_results_overwritten": false,
+  "bootstrap_seed": 20210915,
+  "bootstrap_replicates": 2000,
+  "holdout_seed": 42,
+  "cv_seed": 2021,
+  "n_train": 3831,
+  "n_holdout": 1277,
+  "n_analytic": 5108,
+  "vif_drop_reference_rows": 40,
+  "analytic_missingness_rows": 16,
+  "nb_interval_rows": 18
+}

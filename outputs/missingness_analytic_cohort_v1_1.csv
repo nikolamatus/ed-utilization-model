@@ -1,0 +1,17 @@
+population,n_population,variable,present_in_file,missing_count,sentinel_count,nonusable_count,missing_pct,valid_count,valid_pct
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,AGEY3X,True,0,0,0,0.0,5108,100.0
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,SEX,True,0,0,0,0.0,5108,100.0
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,RACETHX,True,0,0,0,0.0,5108,100.0
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,REGIONY3,True,0,0,0,0.0,5108,100.0
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,MARRY6X,True,0,0,0,0.0,5108,100.0
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,RTHLTH6,True,0,3,3,0.06,5105,99.94
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,MNHLTH6,True,0,5,5,0.1,5103,99.9
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,INSCOVY3,True,0,0,0,0.0,5108,100.0
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,HAVEUS6,True,0,65,65,1.27,5043,98.73
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,POVCATY3,True,0,0,0,0.0,5108,100.0
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,TTLPY3X,True,0,0,2,0.04,5106,99.96
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,EMPST6,True,0,812,818,16.01,4290,83.99
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,ERTOTY1,True,0,0,0,0.0,5108,100.0
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,ERTOTY2,True,0,0,0,0.0,5108,100.0
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,ERTOTY3,True,0,0,0,0.0,5108,100.0
+analytic_cohort_YEARIND1_valid_ERTOTY1toY4,5108,ERTOTY4,True,0,0,0,0.0,5108,100.0

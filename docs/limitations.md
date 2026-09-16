@@ -64,18 +64,28 @@ absolute metrics and, in principle, some contrasts.
 
 ## 9. Imputation strategy
 
-Sentinels and other negatives are recoded to missing, then median
+Sentinels and **any other negative** are recoded to missing, then median
 (numeric) or most-frequent (categorical) imputed inside each training
 fold. This is single imputation, not multiple imputation, and not a
-missingness model.
+missingness model. The documented MEPS codes −1, −7, −8, and −9 are
+examples, not an exhaustive list (HC-245 also contains `EMPST6` = −15).
+
+On the analytic cohort, 16.01% of `EMPST6` values are non-usable,
+overwhelmingly because employment is structurally inapplicable for
+children. Those values are mode-imputed (modal category: employed).
+`EMPST6` coefficients should not be interpreted as causal or
+substantive employment effects. The imputer is fit on training data
+only. The adult-only sensitivity is a related population check. An
+explicit inapplicable category was not used.
 
 ## 10. Missingness
 
-Raw-file non-usable rates after sentinel recode are about 5–8% for many
-candidates and 21.89% for `EMPST6`. Analytic-cohort missingness was
-audited in detail only for `RTHLTH6` (0.06%) and `MNHLTH6` (0.10%).
-Employment and some health items are inapplicable for children and
-become missing after recode. Missingness was not used as a predictor.
+Raw-file non-usable rates after this recode are about 5–8% for many
+candidates and 21.89% for `EMPST6`. Analytic-cohort missingness
+(`outputs/missingness_analytic_cohort_v1_1.csv`) is 16.01% for
+`EMPST6`, 1.27% for `HAVEUS6`, 0.06% for `RTHLTH6`, and 0.10% for
+`MNHLTH6`. Other modeled predictors are complete after recode.
+Missingness was not used as a predictor.
 
 ## 11. Mortality
 
@@ -130,9 +140,11 @@ repository is not a clinical decision-support system.
 ## 19. Predictor redundancy
 
 `AGEY3X`–`MARRY6X` (η = 0.81) and `POVCATY3`–`TTLPY3X` (η = 0.60) are
-associated. Numeric VIFs were below 5; one-hot VIFs are infinite by
-encoding design. The diagnostic does not prove independence and did not
-change the model.
+associated. The locked one-hot VIF table is invalid for categoricals
+because no reference level was dropped (dummy-variable trap). The
+corrected drop-first diagnostic has all VIFs < 5. Pairwise η
+associations remain. The diagnostic does not prove independence and
+did not change the model.
 
 ## 20. Limits of block ablation
 
@@ -143,10 +155,14 @@ models are equivalent to the full model.
 
 ## 21. Limits of the repeat-level sensitivity analysis
 
-The five repeat-level means are a resampling unit (df = 4), not five
-independent population samples. The test is an additional sensitivity
-analysis. Where it disagrees with the pre-registered Nadeau–Bengio
-Brier result, the pre-specified Brier result stands.
+The five repeats reuse the same underlying training sample. Collapsing
+each repeat to one mean and running a *t*-test on five means (df = 4)
+understates uncertainty relative to the Nadeau–Bengio correction on 25
+paired fold differences. The procedure is a descriptive sensitivity
+diagnostic, **not** a more conservative inferential test. Smaller
+repeat-level *p*-values must not be interpreted as stronger evidence.
+Repeat-level Brier significance (*p* ≈ 0.0006) does not overturn the
+primary Brier result (Nadeau–Bengio *p* = 0.1110).
 
 ## 22. Generalizability to real-world healthcare systems
 
@@ -167,30 +183,44 @@ diagnoses. None of those items were used as predictors.
 ## 24. Need for external / temporal validation
 
 Any claim beyond this locked Panel 24 analysis requires a new study:
-another appropriate public dataset or a later MEPS panel, pre-specified
-in advance, without recycling this holdout or these p-values as if they
+another appropriate public dataset or a later MEPS panel, specified
+in advance, without recycling this first-run holdout or these p-values as if they
 were external confirmation.
+
+## 25. Adult-only ROC increment not detected (v1.1)
+
+Restricting the original split to `AGEY3X ≥ 18` (898 children excluded)
+yielded CV ΔROC +0.0194 (*p* = 0.113). The mixed-age Family A ROC
+result should not be presented as an adult-only finding.
+
+## 26. Analysis-plan provenance
+
+The repository analysis plan entered Git on 2026-09-12 with the first
+research snapshot. That is not formal preregistration, and Git order
+alone does not make the plan post-hoc. See
+`docs/research_chronology.md`.
 
 ---
 
 ## What this study demonstrates, suggests, and leaves unknown
 
-**Demonstrates.** On the MEPS Panel 24 analytic sample, under the
+**Demonstrates.** On the MEPS Panel 24 mixed-age analytic sample, under the
 locked cohort, predictor set, regularized logistic model, and
-pre-specified Nadeau–Bengio analysis, the full pre-cutoff feature set
+plan-specified Nadeau–Bengio analysis, the full pre-cutoff feature set
 had statistically detectable incremental ROC-AUC and PR-AUC versus
 three-year ED history. No Family B contrast was statistically detected
-after Holm correction.
+after Holm correction. The adult-only ROC increment was **not**
+detected.
 
 **Suggests.** Additional pre-cutoff survey information can improve
-predictive discrimination relative to ED counts alone in this sample.
-The increment does not appear to collapse when any one pre-specified
-block is removed.
+predictive discrimination relative to ED counts alone in this mixed-age
+sample. The increment does not appear to collapse when any one
+documented predictor block is removed.
 
 **Unknown.** Whether the increment is distributed independent
 information or residual redundancy; whether Brier would be detected
-under a different inferential choice (the pre-specified test did not
-detect it); whether children and adults differ; whether a ≥2-visit
-outcome is predictable; whether weighted national estimates would
-agree; and whether any of this would hold in another panel, another
-dataset, or a clinical system.
+under a different inferential choice (the plan-specified test did not
+detect it); whether the ROC increment holds in adults (v1.1 did not
+detect it); whether a ≥2-visit outcome is predictable; whether weighted
+national estimates would agree; and whether any of this would hold in
+another panel, another dataset, or a clinical system.

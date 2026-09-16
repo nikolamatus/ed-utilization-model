@@ -13,11 +13,11 @@ This document is a manuscript draft based on a frozen empirical analysis. It is 
 
 **Objective.** To estimate, on the Medical Expenditure Panel Survey (MEPS) Panel 24 analytic sample, the incremental predictive value of pre-specified demographic, health, access, and socioeconomic information beyond three-year ED utilization history when predicting any ED visit in calendar year 2022.
 
-**Methods.** The analysis used the AHRQ MEPS Household Component Panel 24 four-year longitudinal public-use file HC-245 (2019–2022). The analytic cohort required unique person identifiers, presence in all four calendar years (`YEARIND == 1`), and valid non-sentinel ED counts for 2019–2022 (N = 5,108; 693 events; prevalence 0.136). The prediction cutoff was 31 December 2021. The primary outcome was any 2022 ED visit (`ERTOTY4 ≥ 1`). A ≥2-visit construct was counted descriptively and was not modeled. The ED-history baseline used `ERTOTY1`–`ERTOTY3`. The full model added age, sex, race/ethnicity, region, marital status, perceived physical and mental health, insurance, usual source of care, poverty category, income, and employment, all specified as available on or before the cutoff or time-invariant. Models were L2-regularized logistic regressions (`C = 1.0`). A locked 25% stratified holdout (n = 1,277) was used for confirmation only. Inferential comparisons used training-only repeated 5×5 stratified cross-validation and a pre-registered Nadeau–Bengio corrected resampled *t*-test. Leave-one-block-out contrasts were Holm-adjusted within each metric. All reported metrics are unweighted analytic-sample scores.
+**Methods.** The analysis used the AHRQ MEPS Household Component Panel 24 four-year longitudinal public-use file HC-245 (2019–2022). The analytic cohort required unique person identifiers, presence in all four calendar years (`YEARIND == 1`), and valid non-sentinel ED counts for 2019–2022 (N = 5,108; 693 events; prevalence 0.136). The prediction cutoff was 31 December 2021. The primary outcome was any 2022 ED visit (`ERTOTY4 ≥ 1`). A ≥2-visit construct was counted descriptively and was not modeled. The ED-history baseline used `ERTOTY1`–`ERTOTY3`. The full model added age, sex, race/ethnicity, region, marital status, perceived physical and mental health, insurance, usual source of care, poverty category, income, and employment, all specified as available on or before the cutoff or time-invariant. Models were L2-regularized logistic regressions (`C = 1.0`). A 25% stratified split (n = 1,277) was a first-run internal evaluation set; it was scored during development and used by a research-triage gate, and it is not an external validation sample. Inferential comparisons used training-only repeated 5×5 stratified cross-validation and a Nadeau–Bengio corrected resampled *t*-test specified in the repository analysis plan. Leave-one-block-out contrasts were Holm-adjusted within each metric. All reported metrics are unweighted analytic-sample scores. The study is not formally preregistered.
 
-**Results.** On the locked holdout, three-year ED history achieved ROC-AUC 0.709, PR-AUC 0.331, and Brier 0.105; the full model achieved 0.774, 0.416, and 0.099. Repeated cross-validation mean increments (full minus ED history) were +0.0295 ROC-AUC, +0.0359 PR-AUC, and −0.0017 Brier. Under the pre-specified Nadeau–Bengio analysis (df = 24), the ROC-AUC and PR-AUC increments were statistically detected (*p* = 0.0226 and 0.0024); the Brier increment was not (*p* = 0.1110). No leave-one-block-out contrast was statistically detected after Holm correction. A repeat-level sensitivity analysis supported the discrimination finding but was not treated as a replacement for the pre-registered test.
+**Results.** On the first-run holdout, three-year ED history achieved ROC-AUC 0.709, PR-AUC 0.331, and Brier 0.105; the full model achieved 0.774, 0.416, and 0.099 (bootstrap percentile 95% CIs for ΔROC 0.028 to 0.101, ΔPR 0.047 to 0.121, ΔBrier −0.009 to −0.003). Repeated cross-validation mean increments (full minus ED history) were +0.0295 ROC-AUC (95% CI 0.0045 to 0.0546), +0.0359 PR-AUC (0.0140 to 0.0578), and −0.0017 Brier (−0.0038 to +0.0004). Under the plan-specified Nadeau–Bengio analysis (df = 24), the ROC-AUC and PR-AUC increments were statistically detected (*p* = 0.0226 and 0.0024); the Brier increment was not (*p* = 0.1110). Negative ΔBrier favors the full model because lower Brier is better. No leave-one-block-out contrast was statistically detected after Holm correction. An adult-only sensitivity did not detect the ROC increment (*p* = 0.113) while still detecting the PR increment (*p* = 0.0029). A repeat-level diagnostic is not a more conservative inferential test and was not treated as a replacement for the Nadeau–Bengio analysis.
 
-**Conclusions.** The primary discrimination hypothesis was supported: adding pre-cutoff information beyond three-year ED utilization history produced statistically detectable improvements in ROC-AUC and PR-AUC under the pre-specified Nadeau–Bengio analysis. The Brier improvement was directionally favorable but was not statistically detected under that analysis. No single pre-specified predictor block was shown to account for the incremental discrimination. However, the block-ablation design cannot distinguish distributed information from more subtle redundancy. This is a methodological and predictive analysis of one MEPS panel. It is not a clinical tool, a national risk estimate, or evidence of clinical utility.
+**Conclusions.** Adding pre-cutoff information beyond three-year ED utilization history produced statistically detectable improvements in ROC-AUC and PR-AUC under the plan-specified Nadeau–Bengio analysis on the mixed-age analytic sample. The Brier improvement was directionally favorable but was not statistically detected. The adult-only ROC result shows that this discrimination increment is not uniformly demonstrated after restricting to persons aged ≥18. No single predictor block was shown to account for the increment. This is a methodological and predictive analysis of one MEPS panel. It is not a clinical tool, a national risk estimate, or evidence of clinical utility.
 
 ---
 
@@ -33,7 +33,7 @@ MEPS is a nationally representative household panel with persistent person ident
 
 The present study uses the AHRQ MEPS Panel 24 four-year longitudinal public-use file HC-245 (2019–2022). In a targeted, non-PRISMA review of PubMed, PMC, publisher sites, and AHRQ documentation (September 2026; approximately 70 titles screened and about 18 retained), no directly matching study was identified that compared an explicit multi-year ED-history-only baseline with a richer pre-cutoff demographic, health, access, and socioeconomic model for next-year any-ED use on MEPS Panel 24 / HC-245 (see `docs/related_work.md`). That is a positioning statement about the literature reviewed. It is not a claim that no such study exists, that this is the first ED prediction study, or that this is the first MEPS ED study.
 
-The contribution is incremental and methodological: a leakage-controlled, time-ordered comparison of a three-year ED-history baseline with a pre-specified fuller feature set, evaluated with locked holdout confirmation, repeated stratified cross-validation, pre-registered Nadeau–Bengio inference (Nadeau and Bengio, 2003), and leave-one-block-out ablation. Individual design elements are not claimed to be novel in isolation.
+The contribution is incremental and methodological: a leakage-controlled, time-ordered comparison of a three-year ED-history baseline with a documented fuller feature set, evaluated with first-run internal holdout evaluation, repeated stratified cross-validation, Nadeau–Bengio inference specified in the repository analysis plan (Nadeau and Bengio, 2003), and leave-one-block-out ablation. Individual design elements are not claimed to be novel in isolation.
 
 This paper describes a frozen analysis. It is a predictive research study of one public-use panel. It is not a clinical prediction tool, a validated clinical model, a deployment-ready system, a national risk calculator, or a causal study.
 
@@ -45,7 +45,7 @@ The research question is:
 
 > How much additional predictive value can longitudinal health, utilization, access, demographic, and socioeconomic information provide beyond historical ED utilization alone?
 
-Two inferential questions were locked in `docs/pre_registration_block_ablation_plan.md` before access-block and socioeconomic-block ablation and before the statistical pass:
+Two inferential questions were locked in `docs/pre_registration_block_ablation_plan.md` before access-block and socioeconomic-block ablation and before the statistical pass. That file is a **documented repository analysis plan**, not a formal preregistration (see `docs/research_chronology.md`).
 
 - **Family A (primary).** Incremental discrimination of the full pre-cutoff model versus the three-year ED-history baseline on training-only repeated cross-validation.
 - **Family B (secondary).** Change in performance when one pre-specified predictor block is removed from the full model.
@@ -80,7 +80,7 @@ A person entered the analytic cohort when all of the following held:
 
 1. Unique `DUPERSID`. Duplicate person rows fail the run.
 2. `YEARIND == 1`, indicating presence in the file for all four calendar years 2019–2022 (HC-245 documentation §2.1.2).
-3. Valid, non-missing, non-sentinel values of `ERTOTY1`, `ERTOTY2`, `ERTOTY3`, and `ERTOTY4`. Documented MEPS codes −1, −7, −8, and −9, and any other negative, are treated as non-usable.
+3. Valid, non-missing, non-sentinel values of `ERTOTY1`, `ERTOTY2`, `ERTOTY3`, and `ERTOTY4`. Documented MEPS codes −1, −7, −8, and −9 are examples; **any negative**, including codes outside that named set (for example `EMPST6` = −15), is treated as non-usable.
 
 The resulting analytic sample is **N = 5,108**, with **693** 2022 any-ED events (prevalence **0.13567**). The raw file contained 5,565 unique persons. `ALL9RDS == 1` on the raw file was 4,883; the intersection of the analytic cohort with `ALL9RDS == 1` was also 4,883. Persons with 1, 2, 3, or 4 observed years on the raw file numbered 191, 160, 106, and 5,108.
 
@@ -125,7 +125,7 @@ Treatment:
 
 These are confirmed HC-245 longitudinal names. Full-year consolidated aliases such as `AGE42X` or `INSCOV21` were not used.
 
-### 7.3 Pre-registered Family B blocks
+### 7.3 Documented Family B blocks
 
 | ID | Block removed | Variables |
 |---|---|---|
@@ -169,22 +169,22 @@ This is regularized logistic regression, not an algorithm-competition study.
 
 ## 10. Preprocessing
 
-MEPS sentinel codes −1, −7, −8, and −9, and any other negative, are recoded to missing. They are never passed through as numeric measurements. Missingness is not used as a predictor; no missingness indicators were added.
+MEPS sentinel codes −1, −7, −8, and −9, and any other negative (including codes outside that named set, such as `EMPST6` = −15), are recoded to missing. They are never passed through as numeric measurements. The named sentinel list is not exhaustive. Missingness is not used as a predictor; no missingness indicators were added.
 
 Preprocessing is an sklearn `Pipeline` with `ColumnTransformer`, fit on the training fold only:
 
 - Numeric: median imputation, then standard scaling.
 - Categorical: most-frequent imputation, then one-hot encoding with `handle_unknown="ignore"` (no reference level dropped).
 
-This is single imputation, not multiple imputation.
+This is single imputation, not multiple imputation. For `EMPST6`, structurally inapplicable values (especially among children) are therefore represented through modal imputation (employed) rather than an explicit inapplicable category. `EMPST6` coefficients should not be read as causal or substantive employment effects. The adult-only sensitivity is a related population check.
 
 ---
 
 ## 11. Validation design
 
-A person-level stratified 25% holdout (`test_size = 0.25`, `random_state = 42`, stratified on the binary 2022 outcome) produced a training portion of **n = 3,831** and a holdout of **n = 1,277** (173 events; prevalence 0.13547).
+A person-level stratified 25% split (`test_size = 0.25`, `random_state = 42`, stratified on the binary 2022 outcome) produced a training portion of **n = 3,831** and a holdout of **n = 1,277** (173 events; prevalence 0.13547).
 
-The holdout was a confirmation split for the selected primary comparison. It was not used to choose the model, tune hyperparameters, choose hypotheses, or compute inferential *p*-values.
+That split is a first-run / development-stage internal evaluation set. It was scored in the original pipeline and used by the research-triage gate (`report.decide_gate`). It was not used to choose predictors, tune `C`, choose Family A/B hypotheses, or compute inferential *p*-values. It is not an external, pristine, or independently confirmatory sample.
 
 Repeated cross-validation reconstructed that holdout with seed 42, left it unused, and applied `RepeatedStratifiedKFold` (5 repeats × 5 folds, `random_state = 2021`) on the training portion only. Preprocessing and the classifier were refit inside each training fold. This produced 25 paired fold-level estimates of ED-history versus full-model performance. The 25 folds are not treated as 25 independent observations.
 
@@ -194,11 +194,11 @@ The 2.5th–97.5th percentiles of fold-level differences are descriptive empiric
 
 ## 12. Performance metrics
 
-Primary reported metrics are ROC-AUC, PR-AUC, and Brier score. PR-AUC is relevant because the outcome is uncommon (analytic prevalence 0.136). Brier score is a proper scoring rule; lower is better.
+Primary reported metrics are ROC-AUC, PR-AUC, and Brier score. PR-AUC is reported alongside ROC-AUC because the outcome is relatively uncommon (analytic prevalence 0.136); precision-recall summarizes ranking among predicted positives and is more sensitive to prevalence than ROC-AUC. Brier score is a proper scoring rule for probabilistic accuracy; **lower is better**. Differences are Full − ED-history, so a negative ΔBrier favors the full model.
 
 Threshold-dependent metrics (accuracy, sensitivity, specificity, precision, recall) at probability 0.5 were computed on the holdout as exploratory descriptive metrics only. They are not an optimized or clinical operating point.
 
-Calibration for the first-run full model on the locked holdout is a quantile-binned reliability table. It is a descriptive check, not a recalibration analysis.
+Calibration for the first-run full model includes a locked quantile-binned reliability table and a v1.1 Cox logistic calibration assessment on the entire first-run holdout (binary `y`, predicted probability `p`, unpenalized `logit(Y) = a + b logit(p)`). Predicted probabilities are not replaced. Mean predicted probability matched observed prevalence (full-model CITL, slope fixed at 1, ≈ 0.006). The joint intercept (≈ 0.40) is the log-odds offset at predicted p = 0.5 when slope is also estimated and should not be read as overall prevalence miscalibration. The slope (≈ 1.24) indicates predicted logits that are somewhat too small in magnitude (risks a bit too close to the mean), compatible with L2 shrinkage; it is not described as severe miscalibration. This assessment is internal, not external validation.
 
 ---
 
@@ -206,7 +206,7 @@ Calibration for the first-run full model on the locked holdout is a quantile-bin
 
 Inference reads saved fold-level CSVs and does not refit models.
 
-The pre-specified test is the Nadeau–Bengio corrected resampled *t*-test (Nadeau and Bengio, 2003):
+The plan-specified test is the Nadeau–Bengio corrected resampled *t*-test (Nadeau and Bengio, 2003):
 
 \[
 \mathrm{Var}_{NB}(\bar{d}) = \left(\frac{1}{n} + \frac{n_{\mathrm{test}}}{n_{\mathrm{train}}}\right) s^{2},
@@ -220,19 +220,21 @@ where \(s^{2}\) is the unbiased sample variance of the \(n\) paired fold-level d
 
 This is not the naive standard error \(s / \sqrt{25}\).
 
-Family A uses the unadjusted Nadeau–Bengio *p*-value. Family B applies Holm–Bonferroni separately within ROC-AUC, PR-AUC, and Brier across the five leave-one-block-out contrasts. Holm is not applied to Family A and is not applied across families or across metrics.
+Family A uses the unadjusted Nadeau–Bengio *p*-value for each of ROC-AUC, PR-AUC, and Brier. The analysis plan described Family A as one primary contrast (Full − ED-history) and did not apply Holm inside Family A. The three metrics are complementary rather than interchangeable; a conservative reader may note that ROC *p* = 0.0226 would not survive a post-hoc Bonferroni correction across three tests, whereas PR *p* = 0.0024 would. That correction was not applied because it was not specified in the plan and would be result-dependent. Family B applies Holm–Bonferroni separately within ROC-AUC, PR-AUC, and Brier across the five leave-one-block-out contrasts. Holm is not applied across families or across metrics.
 
 Reduced-versus-ED-history deltas from block ablations are descriptive and are not additional Family B hypotheses.
 
 ---
 
-## 14. Pre-registration
+## 14. Analysis plan (not formal preregistration)
 
-The contrast set, Family A / Family B structure, Holm plan, estimator, cohort, outcome, seeds, and the rule that inference would wait until B4 and B5 existed are recorded in `docs/pre_registration_block_ablation_plan.md`, committed 2026-09-12. That file was locked before B4 and B5 were run. Its B4/B5 “Not yet run” lines are historical lock-state text, not current project status. The file is not edited after those runs.
+The contrast set, Family A / Family B structure, Holm plan, estimator, cohort, outcome, seeds, and the rule that inference would wait until B4 and B5 existed are recorded in `docs/pre_registration_block_ablation_plan.md`, which entered this Git repository on 2026-09-12. That file was locked before B4 and B5 were run. Its B4/B5 “Not yet run” lines are historical lock-state text, not current project status. The file is not edited after those runs.
+
+Git incorporation is not the same as research-plan creation. The researcher reports that the plan was prepared locally before the repository was initialized. That recollection is not independently dated. A ChatGPT share exists as a provenance lead and does not establish a creation date. The study is therefore described as having a **documented analysis plan**, not as formally preregistered, and not as post-hoc merely because the plan entered Git with the first research snapshot (`docs/research_chronology.md`).
 
 The statistical pass used saved fold-level CSVs only. No predictors, cohort definition, or estimator settings were changed after lock.
 
-The feature-family add-on ablation, death sensitivity, predictor-redundancy diagnostic, and repeat-level robustness check were not pre-registered as inferential replacements for Families A and B.
+The feature-family add-on ablation, death sensitivity, original VIF diagnostic, repeat-level robustness check, and all v1.1 analyses (holdout bootstrap, calibration intercept/slope, corrected VIF, adult-only, ALL9RDS, exclude-2020) were not specified as replacements for Families A and B.
 
 ---
 
@@ -240,11 +242,19 @@ The feature-family add-on ablation, death sensitivity, predictor-redundancy diag
 
 **Death sensitivity.** Thirty-seven `YEARIND == 1` decedents remained in the primary cohort. Dropping nine decedents from the original holdout changed full-model ROC-AUC from 0.774006 to 0.772214. Refitting after dropping 28 training and 9 test decedents gave ROC-AUC 0.770905. The change was not treated as material and did not replace the primary cohort.
 
-**Predictor redundancy diagnostic.** On the training portion (n = 3,831), pairwise associations and variance inflation factors were computed. Flagged associations with |value| > 0.5 (Spearman excluded from the flag rule) included `AGEY3X`–`MARRY6X` (correlation ratio η = 0.8099) and `POVCATY3`–`TTLPY3X` (η = 0.5975). Numeric VIFs were all below 5. Infinite VIFs on one-hot columns are a structural artifact of encoding without dropping a reference level. The diagnostic did not drop predictors or change the production model. It does not prove independence.
+**Predictor redundancy diagnostic.** On the training portion (n = 3,831), pairwise associations and variance inflation factors were computed. Flagged associations with |value| > 0.5 (Spearman excluded from the flag rule) included `AGEY3X`–`MARRY6X` (correlation ratio η = 0.8099) and `POVCATY3`–`TTLPY3X` (η = 0.5975). Numeric VIFs were all below 5. Infinite VIFs on one-hot columns in the locked table are a dummy-variable artifact of encoding without dropping a reference level. A v1.1 diagnostic that drops a reference level yields finite VIFs, all < 5 (`outputs/predictor_vif_drop_reference_v1_1.csv`). VIF is descriptive only; no predictor was removed. It does not prove independence.
 
-**Repeat-level robustness.** The 25 Family A fold deltas were averaged within each of the five repeats, yielding five repeat-level means per metric. A standard one-sample two-sided *t*-test of those means against 0 was run (df = 4). The five repeats are a resampling unit, not five independent population samples. This analysis does not replace the pre-registered Nadeau–Bengio test.
+**Repeat-level robustness.** The 25 Family A fold deltas were averaged within each of the five repeats, yielding five repeat-level means per metric. A standard one-sample two-sided *t*-test of those means against 0 was run (df = 4). The five repeats share the same training sample; treating the five means as independent understates uncertainty. Smaller repeat-level *p*-values are not stronger evidence and do not replace the Nadeau–Bengio test. Repeat-level Brier significance does not overturn the primary Brier result (*p* = 0.1110).
 
-**Feature-family add-on ablation (Design A).** Families were added one at a time to ED history and scored on the locked holdout. This is a different contrast from leave-one-block-out and is reported as exploratory confirmation, not as Family B.
+**Feature-family add-on ablation (Design A).** Families were added one at a time to ED history and scored on the first-run holdout. This is a different contrast from leave-one-block-out and is reported as exploratory internal evaluation, not as Family B.
+
+**v1.1 adult-only sensitivity.** The original seed-42 split was restricted to `AGEY3X ≥ 18` (train n = 3,162; holdout n = 1,048, 166 events; 898 analytic persons were under 18). Training-only 5×5 Nadeau–Bengio ΔROC +0.0194 (*p* = 0.1134; 95% CI −0.0050 to 0.0438), ΔPR +0.0299 (*p* = 0.0029), ΔBrier −0.0014 (*p* = 0.1958). The ROC increment was not detected in adults. This addresses a population-definition concern (employment and some items are often inapplicable for children) and does not replace the mixed-age primary analysis.
+
+**v1.1 exploratory adult-only age ablation (post-primary).** Within that same adult subset, the documented B1 contrast (remove `AGEY3X` only) was repeated. CV No-age − Full ΔROC −0.0022 (*p* = 0.637). Age did not show a statistically detected incremental contribution among adults. This diagnostic is not prespecified, is not a primary analysis, and is not used to explain the adult Full-versus-ED ROC result.
+
+**v1.1 ALL9RDS sensitivity.** Restricting the original split to `ALL9RDS == 1` (train n = 3,663; holdout n = 1,220) left the discrimination conclusion directionally unchanged (ΔROC +0.0311, *p* = 0.0168; ΔPR +0.0381, *p* = 0.0073; ΔBrier −0.0018, *p* = 0.1201). ALL9RDS is not adopted as primary.
+
+**v1.1 exclude-2020 (`ERTOTY2`) sensitivity.** The same persons and split were used; ED-history used `ERTOTY1` and `ERTOTY3` only. The ED-history baseline was weaker (holdout ROC-AUC 0.684 versus 0.709 with three-year history), so the increment was larger. That is expected when a year of ED counts is removed from the comparator. It does not replace the three-year baseline.
 
 ---
 
@@ -265,9 +275,9 @@ Source: `outputs/model_metrics.csv`.
 
 Exact saved values for the inferential comparator and full model: ED-history ROC-AUC 0.709095, PR-AUC 0.330794, Brier 0.105286; full model 0.774006, 0.415935, 0.099390. Holdout increment, full minus three-year ED history: **+0.064911 ROC-AUC**, **+0.085141 PR-AUC**, Brier **−0.005896**.
 
-The locked holdout produced larger incremental gains than the repeated-CV mean and should therefore be interpreted as confirmation on one split rather than as the expected effect size.
+Person-level bootstrap percentile 95% intervals (B = 2,000, seed 20210915; `outputs/holdout_bootstrap_v1_1.csv`): ΔROC 0.0281 to 0.1007; ΔPR 0.0473 to 0.1212; ΔBrier −0.0087 to −0.0029. The first-run holdout increment is larger than the repeated-CV mean and should be read as one internal split, not as the expected effect size.
 
-Threshold metrics at 0.5 are exploratory only (full-model sensitivity 0.104, specificity 0.995). Calibration showed imperfect alignment of predicted and observed event rates across deciles; that table was not used as a recalibration result.
+Threshold metrics at 0.5 are exploratory only (full-model sensitivity 0.104, specificity 0.995). The locked reliability diagram showed imperfect alignment across deciles. v1.1 Cox logistic calibration on the entire first-run holdout (assessment only, not recalibration): full-model mean predicted 0.135 vs observed 0.135; CITL (slope fixed at 1) 0.006; joint intercept 0.402; slope 1.237. The near-zero CITL and matched means indicate no material overall over- or under-prediction of event frequency. The slope modestly above 1 indicates predicted risks a bit too close to the mean. This is an internal-holdout assessment, not external validation.
 
 ### 16.2 Repeated cross-validation
 
@@ -292,17 +302,17 @@ Paired deltas, full minus ED history:
 
 ### 16.3 Primary inference (Family A)
 
-Source: `outputs/statistical_inference.csv`. Nadeau–Bengio, 25 paired differences, df = 24, two-sided, α = 0.05, no multiplicity adjustment.
+Source: `outputs/statistical_inference.csv` and `outputs/statistical_inference_intervals_v1_1.csv`. Nadeau–Bengio, 25 paired differences, df = 24, two-sided, α = 0.05, no multiplicity adjustment. 95% CIs are mean ± t_{0.975,24} × corrected SE.
 
-| Metric | Mean difference | Corrected SE | *t* | *p* | Significant at 0.05 |
-|---|---:|---:|---:|---:|---|
-| ROC-AUC | +0.0295 | 0.0121 | +2.437 | 0.0226 | yes |
-| PR-AUC | +0.0359 | 0.0106 | +3.385 | 0.0024 | yes |
-| Brier | −0.0017 | 0.0010 | −1.655 | 0.1110 | no |
+| Metric | Mean difference | Corrected SE | 95% CI | *t* | *p* | Significant at 0.05 |
+|---|---:|---:|---|---:|---:|---|
+| ROC-AUC | +0.0295 | 0.0121 | 0.0045 to 0.0546 | +2.437 | 0.0226 | yes |
+| PR-AUC | +0.0359 | 0.0106 | 0.0140 to 0.0578 | +3.385 | 0.0024 | yes |
+| Brier | −0.0017 | 0.0010 | −0.0038 to +0.0004 | −1.655 | 0.1110 | no |
 
 Exact saved values: ROC mean +0.02953897, SE 0.01211861, *t* +2.437488, *p* = 0.02257265; PR mean +0.03590249, SE 0.01060767, *t* +3.384577, *p* = 0.00244863; Brier mean −0.00166965, SE 0.00100914, *t* −1.654524, *p* = 0.11104216.
 
-The primary discrimination hypothesis was supported: adding pre-cutoff information beyond three-year ED utilization history produced statistically detectable improvements in ROC-AUC and PR-AUC under the pre-specified Nadeau–Bengio analysis. The Brier improvement was directionally favorable but was not statistically detected under that analysis.
+The primary discrimination contrast was supported for ROC-AUC and PR-AUC under the plan-specified Nadeau–Bengio analysis on the mixed-age sample. The Brier improvement was directionally favorable (lower Brier is better) but was not statistically detected; its interval includes 0.
 
 Statistical significance is not clinical significance.
 
@@ -374,9 +384,7 @@ Repeat-level means (full minus ED history):
 | PR-AUC | +0.0438 | +0.0326 | +0.0265 | +0.0360 | +0.0405 | +11.850 | 0.0003 | 0.0024 |
 | Brier | −0.0019 | −0.0018 | −0.0011 | −0.0015 | −0.0021 | −9.747 | 0.0006 | 0.1110 |
 
-The repeat-level sensitivity analysis was supportive of the discrimination finding but was treated as additional sensitivity evidence rather than a replacement for the pre-registered Nadeau–Bengio analysis.
-
-ROC-AUC and PR-AUC remained significant under the sensitivity analysis. Brier became significant at the repeat level (*p* = 0.0006) while remaining non-significant under the pre-specified Nadeau–Bengio test (*p* = 0.1110). The pre-specified Brier result stands.
+The repeat-level analysis is a descriptive sensitivity diagnostic. The five repeats reuse the same training population, so treating five repeat means as independent understates uncertainty. Its smaller *p*-values must not be interpreted as stronger evidence. ROC-AUC and PR-AUC remained significant under that diagnostic; Brier became significant at the repeat level (*p* = 0.0006) while remaining non-significant under the plan-specified Nadeau–Bengio test (*p* = 0.1110). The plan-specified Brier result stands.
 
 ---
 
@@ -384,15 +392,17 @@ ROC-AUC and PR-AUC remained significant under the sensitivity analysis. Brier be
 
 The primary result is incremental, not absolute. Three-year ED history already discriminated 2022 any-ED use on this analytic sample (holdout ROC-AUC 0.709; CV mean 0.685). That is consistent with a large literature in which prior ED use is a dominant predictor (Gao et al., 2018; Montoy et al., 2019; Chiu et al., 2023; Wu et al., 2016). The question addressed here is what remains after that baseline is specified.
 
-The primary discrimination hypothesis was supported: adding pre-cutoff information beyond three-year ED utilization history produced statistically detectable improvements in ROC-AUC and PR-AUC under the pre-specified Nadeau–Bengio analysis. The Brier improvement was directionally favorable but was not statistically detected under that analysis.
+The primary discrimination contrast was supported for ROC-AUC and PR-AUC under the plan-specified Nadeau–Bengio analysis on the mixed-age analytic sample. The Brier improvement was directionally favorable but was not statistically detected under that analysis.
 
-The locked holdout increment (+0.065 ROC-AUC, +0.085 PR-AUC) exceeded the repeated-CV mean increment (+0.030 ROC-AUC, +0.036 PR-AUC). The locked holdout produced larger incremental gains than the repeated-CV mean and should therefore be interpreted as confirmation on one split rather than as the expected effect size. Inference uses the training-only paired fold differences, not the holdout *p*-value, which was never computed.
+The first-run holdout increment (+0.065 ROC-AUC, +0.085 PR-AUC) exceeded the repeated-CV mean increment (+0.030 ROC-AUC, +0.036 PR-AUC). That split is one internal evaluation, not an expected effect size and not external confirmation. Inference uses the training-only paired fold differences, not a holdout *p*-value, which was never computed.
 
 Leave-one-block-out results did not identify a single block whose removal statistically accounted for the increment. Remaining CV mean ROC increments versus ED history stayed in a similar range after each removal (approximately +0.024 to +0.036). No single pre-specified predictor block was shown to account for the incremental discrimination. However, the block-ablation design cannot distinguish distributed information from more subtle redundancy. Non-significant Family B tests are not evidence that reduced models are equivalent to the full model or that any block can be dropped for substantive reasons.
 
 The exploratory holdout add-on ablation found the largest single-family increment when demographics were added to ED history. That contrast is not interchangeable with removing the demographic block from the full model, and Family B did not detect a demographic-block effect after Holm correction. The two designs answer different questions.
 
-The repeat-level sensitivity analysis was supportive of the discrimination finding but was treated as additional sensitivity evidence rather than a replacement for the pre-registered Nadeau–Bengio analysis. Where the two procedures disagree on Brier, the pre-specified result is retained.
+The adult-only sensitivity did not detect the ROC increment (mean ΔROC +0.0194, *p* = 0.113) while still detecting PR-AUC. The mixed-age Family A ROC finding therefore should not be presented as demonstrated for adults alone. An exploratory adult-only drop of `AGEY3X` did not detect a change versus the adult full model (ΔROC −0.0022, *p* = 0.637); that diagnostic is not used to explain the adult Full-versus-ED result. ALL9RDS restriction did not change the discrimination conclusion. Excluding 2020 ED counts weakened the history baseline and enlarged the increment; that is a change of comparator, not stronger evidence for the original question.
+
+The repeat-level analysis is a descriptive sensitivity diagnostic, not a more conservative inferential test. The five repeats share the same training sample, so smaller *p*-values understate uncertainty and are not stronger evidence. Where the two procedures disagree on Brier, the plan-specified Nadeau–Bengio result is retained.
 
 This study is closest, among papers in the targeted review, to incremental-information designs rather than algorithm bake-offs. Gao et al. (2018) quantified utilization increments for 30-day VA revisits among recent ED users. Stockbridge et al. (2014) used a two-year MEPS panel for survey-weighted association with next-year ED use. Fleishman and Cohen (2010) nested incremental models for high cost. Chiu et al. (2023) found that prior-year ED visits dominated algorithm comparisons for frequent use. The present analysis differs in panel, outcome (any 2022 ED visit among four-year participants), baseline (explicit three-year ED-history-only model), metric set, and inferential procedure. Those differences are design differences, not claims of superiority in real-world healthcare populations.
 
@@ -420,9 +430,9 @@ These limitations apply regardless of which tests were statistically detected.
 
 8. **Model class.** The estimator is L2-regularized logistic regression with fixed `C = 1.0`. Incremental discrimination is specific to this estimator class.
 
-9. **Single imputation.** Sentinels are recoded to missing, then median or most-frequent imputed inside each fold. This is not multiple imputation.
+9. **Single imputation.** Sentinels and any other negatives are recoded to missing, then median or most-frequent imputed inside each fold. This is not multiple imputation. `EMPST6` non-usable values (16.01% of the analytic cohort) are overwhelmingly structurally inapplicable for children and are mode-imputed (modal category: employed). Those coefficients are not causal employment effects. An explicit inapplicable category was not used.
 
-10. **Missingness.** Raw-file non-usable rates after sentinel recode are about 5–8% for many candidates and 21.89% for `EMPST6`. Analytic-cohort missingness was audited in detail for `RTHLTH6` (0.06%) and `MNHLTH6` (0.10%). Employment and some health items are inapplicable for children.
+10. **Missingness.** On the analytic cohort (N = 5,108), `EMPST6` is non-usable for 16.01%; `HAVEUS6` 1.27%; `RTHLTH6` 0.06%; `MNHLTH6` 0.10%; other modeled predictors are complete after sentinel recode (`outputs/missingness_analytic_cohort_v1_1.csv`). Employment and some items are inapplicable for children. The adult-only sensitivity is a related population check.
 
 11. **Mortality.** Competing risk of death is not modeled. Thirty-seven in-scope decedents remain in the primary cohort.
 
@@ -430,7 +440,7 @@ These limitations apply regardless of which tests were statistically detected.
 
 13. **≥2 ED visits not modeled.** The high-utilizer construct was counted (209 events) and not modeled.
 
-14. **Children and adults not separated.** Age is a single numeric predictor. Some covariates have different meaning or inapplicability by age.
+14. **Children and adults mixed in the primary analysis.** Age is a single numeric predictor. Some covariates have different meaning or inapplicability by age. The v1.1 adult-only sensitivity did not detect the ROC increment (*p* = 0.113). The primary Family A ROC result should not be generalized as an adult-only finding.
 
 15. **No clinical utility analysis.** No decision-curve, net-benefit, or intervention-impact analysis was performed.
 
@@ -438,15 +448,21 @@ These limitations apply regardless of which tests were statistically detected.
 
 17. **No causal interpretation.** Ablation deltas are predictive associations, not effects of intervening on a block.
 
-18. **Predictor association.** Age and marital status, and poverty category and income, are associated. The diagnostic does not prove independence.
+18. **Predictor association.** Age and marital status, and poverty category and income, are associated. The diagnostic does not prove independence. Corrected drop-first VIFs were all < 5; VIF was not used to drop predictors.
 
 19. **Limits of block ablation.** Leave-one-block-out cannot distinguish distributed independent information from more subtle redundancy.
 
-20. **Limits of repeat-level sensitivity.** Five repeat-level means are a resampling unit (df = 4), not five independent samples.
+20. **Limits of repeat-level sensitivity.** Five repeat-level means reuse the same training sample (df = 4). The procedure understates uncertainty relative to Nadeau–Bengio and is not a more conservative test. Smaller *p*-values are not stronger evidence. Repeat-level Brier significance does not overturn the primary Brier result (*p* = 0.1110).
 
-21. **Survey versus operational data.** Coding, missingness, case-mix, and outcome ascertainment differ from EHR or claims systems. Performance in a hospital, payer, or regional system is unknown.
+21. **Internal rather than external validation.** The 25% split is a first-run internal evaluation set. There is no external or later-panel test set.
 
-22. **Targeted literature review.** The related-work review was targeted and not a PRISMA systematic review. Absence of a paper from that review does not prove that no such paper exists.
+22. **Family A reports three metrics without multiplicity correction.** The plan specified one primary contrast and no Holm inside Family A. ROC *p* = 0.0226 would not survive a post-hoc Bonferroni ×3; PR would. That correction was not applied.
+
+23. **Analysis plan is documented, not formally preregistered.** Git incorporation on 2026-09-12 does not date local plan creation (`docs/research_chronology.md`).
+
+24. **Survey versus operational data.** Coding, missingness, case-mix, and outcome ascertainment differ from EHR or claims systems. Performance in a hospital, payer, or regional system is unknown.
+
+25. **Targeted literature review.** The related-work review was targeted and not a PRISMA systematic review. Absence of a paper from that review does not prove that no such paper exists.
 
 ---
 
@@ -464,17 +480,17 @@ pip install -e ".[dev]"
 python -m pytest
 ```
 
-The completed analysis sequence is documented in `docs/methodology.md`. The first-run command `python -m feasibility.run` overwrites locked holdout artifacts and should not be re-run against this completed analysis. Later modules write their own filenames. Seeds: holdout and logistic `random_state = 42`; repeated CV `random_state = 2021`.
+The completed analysis sequence is documented in `docs/methodology.md`. The first-run command `python -m feasibility.run` overwrites locked holdout artifacts and should not be re-run against this completed analysis. Later modules write their own filenames. Seeds: holdout and logistic `random_state = 42`; repeated CV `random_state = 2021`; v1.1 holdout bootstrap `20210915`.
 
-Authoritative numeric sources for this draft are `outputs/model_metrics.csv`, `outputs/repeated_cv_summary.csv`, `outputs/statistical_inference.csv`, `outputs/feature_family_ablation.csv`, the five block-ablation CV files, and `outputs/robustness_repeat_level_test.csv`. Narrative supporting documents are `docs/methodology.md`, `docs/results.md`, `docs/limitations.md`, `docs/data_sources.md`, `docs/related_work.md`, `docs/analysis_status.md`, and `docs/pre_registration_block_ablation_plan.md`.
+Authoritative numeric sources for this draft are `outputs/model_metrics.csv`, `outputs/repeated_cv_summary.csv`, `outputs/statistical_inference.csv`, `outputs/statistical_inference_intervals_v1_1.csv`, `outputs/holdout_bootstrap_v1_1.csv`, `outputs/holdout_calibration_v1_1.csv`, the v1.1 sensitivity files, `outputs/feature_family_ablation.csv`, the five block-ablation CV files, and `outputs/robustness_repeat_level_test.csv`. Narrative supporting documents include `docs/research_chronology.md`, `docs/revision_v1_1_notes.md`, and `docs/reporting_checklist.md`.
 
 ---
 
 ## 20. Conclusion
 
-On the MEPS Panel 24 analytic sample, under a locked cohort, predictor set, regularized logistic estimator, and pre-specified Nadeau–Bengio analysis, the full pre-cutoff feature set showed statistically detectable incremental ROC-AUC and PR-AUC versus three-year ED history. The Brier increment was directionally favorable and was not statistically detected under that analysis.
+On the MEPS Panel 24 mixed-age analytic sample, under a locked cohort, predictor set, regularized logistic estimator, and plan-specified Nadeau–Bengio analysis, the full pre-cutoff feature set showed statistically detectable incremental ROC-AUC and PR-AUC versus three-year ED history. The Brier increment was directionally favorable and was not statistically detected under that analysis.
 
-The locked holdout produced larger incremental gains than the repeated-CV mean and should therefore be interpreted as confirmation on one split rather than as the expected effect size. The repeat-level sensitivity analysis was supportive of the discrimination finding but was treated as additional sensitivity evidence rather than a replacement for the pre-registered Nadeau–Bengio analysis.
+The first-run holdout produced larger incremental gains than the repeated-CV mean and should be interpreted as one internal evaluation split rather than as the expected effect size. The adult-only sensitivity did not detect the ROC increment. The repeat-level diagnostic is not a more conservative test and does not replace the Nadeau–Bengio analysis.
 
 No single pre-specified predictor block was shown to account for the incremental discrimination. However, the block-ablation design cannot distinguish distributed information from more subtle redundancy.
 
@@ -484,7 +500,7 @@ This study demonstrates unweighted predictive increments on one public four-year
 
 ## Author contribution and AI-assisted development
 
-The author is responsible for the research question, study design, cohort and leakage rules, predictor lock, validation and inferential plan, pre-registration decisions, interpretation of results, and the scientific claims in this draft. Evaluation of whether analyses were complete, which contrasts were confirmatory, and how findings should be bounded was a human responsibility.
+The author is responsible for the research question, study design, cohort and leakage rules, predictor lock, validation and inferential plan, analysis-plan decisions, interpretation of results, and the scientific claims in this draft. Evaluation of whether analyses were complete, which contrasts were primary, and how findings should be bounded was a human responsibility.
 
 Software implementation, repository organization, literature-search assistance, and drafting of documentation and this manuscript were AI-assisted. AI was not used only for grammar or copy-editing. The author reviewed the analysis outputs, methods, and wording and remains responsible for errors.
 

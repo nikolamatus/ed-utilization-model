@@ -28,7 +28,7 @@ ED_COLUMNS = list(ablation.FAMILY_COLUMNS["ed_history_only"])
 FULL_COLUMNS = list(ablation.FAMILY_COLUMNS["full_model"])
 
 HOLDOUT_BENCHMARK = {
-    "source": "untouched first-run holdout (outputs/model_metrics.csv); not refit here",
+    "source": "first-run holdout (outputs/model_metrics.csv); not refit here; not used for inference",
     "ed_history_roc_auc": 0.709095145346402,
     "ed_history_pr_auc": 0.33079411280933274,
     "ed_history_brier": 0.10528623721670442,
@@ -222,14 +222,14 @@ def write_summary_md(path, fold_df: pd.DataFrame, summary: pd.DataFrame) -> None
     holdout_optimistic_pr = HOLDOUT_BENCHMARK["delta_pr"] > stats.loc["delta_pr_auc_full_minus_ed", "p97_5"]
     if holdout_optimistic_roc or holdout_optimistic_pr:
         optimism = (
-            "The untouched holdout lifts sit at or above the upper tail of this "
+            "The first-run holdout lifts sit at or above the upper tail of this "
             "repeated-CV distribution and may be somewhat optimistic relative to "
             "typical training-fold increments."
         )
         strengthen = "The CV evidence supports a positive increment but suggests the single holdout lift is on the high side."
     elif mean_droc > 0 and n_pos_roc >= int(0.8 * n):
         optimism = (
-            "The untouched holdout lifts are larger than the CV means but are not "
+            "The first-run holdout lifts are larger than the CV means but are not "
             "extreme relative to the empirical 2.5th-97.5th percentile range."
         )
         strengthen = "The CV evidence strengthens the holdout finding: the increment is repeatedly positive on the training portion."
@@ -241,7 +241,8 @@ def write_summary_md(path, fold_df: pd.DataFrame, summary: pd.DataFrame) -> None
     md = f"""# Repeated stratified CV (training portion only)
 
 This experiment does **not** replace the first-run 25% holdout.
-The holdout (n_test=1,277) remains the final untouched benchmark.
+The holdout (n_test=1,277) remains a first-run internal evaluation set
+(not an external, pristine, or independently confirmatory benchmark).
 CV uses only the original training portion (n=3,831), reconstructed with
 holdout seed={HOLDOUT_SEED}. RepeatedStratifiedKFold: {CV_N_REPEATS} repeats
 x {CV_N_SPLITS} folds, random_state={CV_RANDOM_STATE}. Stratified on the
@@ -250,7 +251,7 @@ x {CV_N_SPLITS} folds, random_state={CV_RANDOM_STATE}. Stratified on the
 These percentiles are an **empirical repeated-CV distribution**, not
 formal external-validation confidence intervals.
 
-## Untouched holdout benchmark (not refit)
+## First-run holdout metrics (not refit; not used for inference)
 - ED-history ROC-AUC {HOLDOUT_BENCHMARK['ed_history_roc_auc']:.3f}, PR-AUC {HOLDOUT_BENCHMARK['ed_history_pr_auc']:.3f}, Brier {HOLDOUT_BENCHMARK['ed_history_brier']:.3f}
 - Full model ROC-AUC {HOLDOUT_BENCHMARK['full_roc_auc']:.3f}, PR-AUC {HOLDOUT_BENCHMARK['full_pr_auc']:.3f}, Brier {HOLDOUT_BENCHMARK['full_brier']:.3f}
 - Incremental ROC-AUC {HOLDOUT_BENCHMARK['delta_roc']:+.3f}, PR-AUC {HOLDOUT_BENCHMARK['delta_pr']:+.3f}
