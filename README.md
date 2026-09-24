@@ -219,8 +219,7 @@ and follow AHRQ public-use conditions.
 
 Cite this repository using the metadata in [`CITATION.cff`](CITATION.cff).
 This is a research software citation for the frozen MEPS Panel 24
-analysis. It is not a peer-reviewed journal article and does not have
-a DOI yet.
+analysis.
 
 ## Related work
 
